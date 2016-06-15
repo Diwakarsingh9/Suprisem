@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:geekui="http://schemas.android.com/apk/res-auto"
+    tools:context="foodorderingapp.apporio.com.suprisem.CategoriesActivity"
+    android:orientation="vertical"
+    android:background="#ffffff">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="top|center">
+
+        <FrameLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@color/white"
+            android:gravity="center"
+
+            android:elevation="5dp">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:id="@+id/imageView2"
+                android:layout_gravity="left|center"
+                android:layout_marginLeft="15dp"
+                android:src="@drawable/back" />
+
+            <views.textview.TypefaceTextView
+                geekui:customTypeface="fonts/Ubuntu-R.ttf"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="About Us"
+                android:id="@+id/header"
+                android:layout_weight="1"
+                android:textSize="22dp"
+                android:layout_gravity="center"
+                android:textColor="@color/lightblack"
+                 />
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/cartll"
+                android:layout_marginRight="15dp"
+                android:layout_gravity="right|center"
+                android:layout_marginTop="2dp">
+
+                <ImageView
+                    android:layout_width="35dp"
+                    android:layout_height="30dp"
+                    android:id="@+id/cartimg"
+                    android:layout_gravity="center"
+                    android:src="@drawable/cart" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:layout_gravity="center|right"
+                    android:id="@+id/total_item"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:background="@drawable/circleunit"
+                    android:textSize="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:text="0" />
+            </FrameLayout>
+
+        </FrameLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="7dp"
+            android:background="@drawable/bgforheading"/>
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <views.textview.TypefaceTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Lorem ipsum dolor sit amet, placerat in. Nunc dolor nulla leo, sit non aenean, neque leo, ipsum viverra lorem. Enim porta dui lacinia at, ipsum amet wisi justo, vitae turpis magnis sollicitudin felis odio quam. Nec eros donec justo sollicitudin aenean dolor, magna aenean, suscipit hendrerit proin facilisis lectus, est penatibus euismod. Accumsan id tincidunt vel, ipsum tempus suscipit vel integer, aliquam erat qui risus, pellentesque vel consequat quam a semper pellentesque. Iaculis pulvinar sapien. Cras euismod suscipit purus nullam etiam, pharetra integer suscipit class, diam nullam tristique mauris ante. "
+            android:id="@+id/textView2"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="10dp"
+                geekui:customTypeface="fonts/Ubuntu-L.ttf"
+
+                android:layout_marginRight="10dp"
+            android:textColor="@color/browndark"
+            android:textSize="15dp"
+            android:layout_marginTop="10dp" />
+
+            <views.textview.TypefaceTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Privacy Policy"
+            android:id="@+id/textVieeew"
+            geekui:customTypeface="fonts/Ubuntu-R.ttf"
+
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:textColor="#ee000000"
+            android:textSize="18dp"
+             />
+
+            <views.textview.TypefaceTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Lorem ipsum dolor sit amet, placerat in. Nunc dolor nulla leo, sit non aenean, neque leo, ipsum viverra lorem. Enim porta dui lacinia at, ipsum amet wisi justo, vitae turpis magnis sollicitudin felis odio quam. "
+            android:id="@+id/sjgfj"
+            android:layout_marginLeft="10dp"
+                geekui:customTypeface="fonts/Ubuntu-L.ttf"
+
+                android:layout_marginBottom="10dp"
+            android:layout_marginRight="10dp"
+            android:textColor="@color/browndark"
+            android:textSize="15dp"
+             />
+
+            <views.textview.TypefaceTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Terms &amp; Conditions"
+            android:id="@+id/deded"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="10dp"
+                geekui:customTypeface="fonts/Ubuntu-R.ttf"
+
+                android:layout_marginBottom="5dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:textColor="#ee000000"
+            android:textSize="18dp"
+           />
+
+            <views.textview.TypefaceTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Lorem ipsum dolor sit amet, placerat in. Nunc dolor nulla leo, sit non aenean, neque leo, ipsum viverra lorem. Enim porta dui lacinia at, ipsum amet wisi justo, vitae turpis magnis sollicitudin felis odio quam. "
+            android:id="@+id/swswsw"
+                geekui:customTypeface="fonts/Ubuntu-L.ttf"
+
+                android:layout_marginLeft="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="10dp"
+            android:textColor="@color/browndark"
+            android:textSize="15dp"
+            />
+
+        </LinearLayout>
+</ScrollView>
+    </LinearLayout>
+</LinearLayout>

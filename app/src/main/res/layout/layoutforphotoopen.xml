@@ -1,0 +1,20 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:geekui="http://schemas.android.com/apk/res-auto"
+    tools:context="com.Apporio.it.fragments.BlankFragment"
+
+    android:id="@+id/ghghj"
+    android:orientation="vertical"
+    android:background="#ffffff">
+    <!-- TODO: Update blank fragment layout -->
+    <com.android.volley.toolbox.NetworkImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/imageView"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:scaleType="fitCenter" />
+
+</LinearLayout>

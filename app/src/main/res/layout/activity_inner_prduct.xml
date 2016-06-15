@@ -1,0 +1,627 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:geekui="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="foodorderingapp.apporio.com.suprisem.CategoriesActivity"
+    android:orientation="vertical"
+    android:background="#ffffff">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="top|center">
+
+
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="top|center">
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="40dp">
+                <FrameLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="280dp">
+
+
+                    <view
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        class="android.support.v4.view.ViewPager"
+                        android:id="@+id/pager"
+                        android:layout_gravity="center"
+                        android:layout_weight="1" />
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="#000"
+                        android:alpha="0.2"></LinearLayout>
+
+
+                </FrameLayout>
+                <com.viewpagerindicator.CirclePageIndicator
+                    android:id="@+id/titles"
+                    android:padding="1dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_gravity="center"
+
+                    android:layout_height="wrap_content"
+                    android:layout_width="fill_parent"
+                    android:layout_marginTop="5dp" />
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="left|center"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="5dp">
+
+                    <views.textview.TypefaceTextView
+                        geekui:customTypeface="fonts/Ubuntu-R.ttf"
+
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Product Title"
+                        android:id="@+id/p_name"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:textColor="@color/black"
+                        android:textSize="20dp"
+                        android:layout_weight="1" />
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="10dp"
+                        android:gravity="left|center">
+
+                        <ImageView
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:id="@+id/minus"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/minus" />
+
+                        <views.textview.TypefaceTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="1"
+                            android:id="@+id/result"
+                            android:textSize="20dp"
+                            geekui:customTypeface="fonts/Tahoma.ttf"
+
+                            android:textColor="@color/colorPrimaryDark"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="5dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:textStyle="bold" />
+
+                        <ImageView
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:id="@+id/plus"
+                            android:src="@drawable/plus"
+                            android:scaleType="centerCrop" />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="left|center">
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+
+                        <views.textview.TypefaceTextView
+                            geekui:customTypeface="fonts/Ubuntu-L.ttf"
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/p_price"
+                            android:layout_marginLeft="12dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:textColor="@color/lightblack"
+                            android:textSize="20dp"
+                            android:text="£394.40" />
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginRight="8dp"
+                            android:id="@+id/llforoptions"
+                            android:padding="2dp">
+
+
+                            <!--<LinearLayout-->
+                                <!--android:orientation="horizontal"-->
+                                <!--android:layout_width="match_parent"-->
+                                <!--android:layout_height="wrap_content"-->
+                                <!--android:gravity="center"-->
+                                <!--android:padding="10dp"-->
+                                <!--android:background="@drawable/bgforoptions"-->
+                                <!--android:layout_marginLeft="5dp"-->
+                                <!--android:layout_weight="1"-->
+                                <!--android:id="@+id/colorll"-->
+                                <!--android:visibility="gone">-->
+
+                                <!--<TextView-->
+                                    <!--android:layout_width="match_parent"-->
+                                    <!--android:layout_height="wrap_content"-->
+                                    <!--android:text="Color"-->
+                                    <!--android:id="@+id/color"-->
+                                    <!--android:layout_weight="1"-->
+                                    <!--android:textColor="#000"-->
+                                    <!--android:textSize="16dp"-->
+                                    <!--android:gravity="center" />-->
+
+                                <!--<ImageView-->
+                                    <!--android:layout_width="20dp"-->
+                                    <!--android:layout_height="20dp"-->
+                                    <!--android:id="@+id/ewf"-->
+                                    <!--android:src="@drawable/sortd"-->
+                                    <!--android:layout_marginLeft="5dp"-->
+                                    <!--android:scaleType="fitXY" />-->
+                            <!--</LinearLayout>-->
+                            LinearLayout
+                                android:orientation="horizontal"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:padding="10dp"
+                                android:background="@drawable/bgforoptions"
+                                android:layout_marginLeft="5dp"
+                                android:layout_weight="1"
+                                android:id="@+id/quantityll">
+
+                                ImageView
+                                    android:layout_width="18dp"
+                                    android:layout_height="18dp"
+                                    android:id="@+id/dfdsafre"
+                                    android:layout_marginRight="5dp"
+                                    android:src="@drawable/quantity" />
+
+                                TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="Quantity"
+                                    android:id="@+id/quan"
+                                    android:layout_weight="1"
+                                    android:textColor="#000"
+                                    android:textSize="16dp"
+                                    android:gravity="center" />
+                            /LinearLayout>
+                        </LinearLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="IN STOCK"
+                            android:id="@+id/stck"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:textColor="#166088"
+                            android:layout_gravity="left|center"
+                            android:gravity="right"
+                            android:textStyle="bold"
+                            android:visibility="gone" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+                <views.textview.TypefaceTextView
+                    geekui:customTypeface="fonts/Ubuntu-R.ttf"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Description"
+                    android:id="@+id/textVieeew"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginRight="10dp"
+                    android:textColor="#ee000000"
+                    android:textSize="18dp"
+                    android:layout_marginTop="10dp" />
+
+                <views.textview.TypefaceTextView
+                    geekui:customTypeface="fonts/Ubuntu-L.ttf"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Lorem ipsum dolor sit amet, placerat in. Nunc dolor nulla leo, sit non aenean, neque leo, ipsum viverra lorem. Enim porta dui lacinia at, ipsum amet wisi justo, vitae turpis magnis sollicitudin felis odio quam. Nec eros donec justo sollicitudin aenean dolor, magna aenean, suscipit hendrerit proin facilisis lectus, est penatibus euismod. Accumsan id tincidunt vel, ipsum tempus suscipit vel integer, aliquam erat qui risus, pellentesque vel consequat quam a semper pellentesque. Iaculis pulvinar sapien. Cras euismod suscipit purus nullam etiam, pharetra integer suscipit class, diam nullam tristique mauris ante. "
+                    android:id="@+id/p_desc"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:textColor="#7a7979"
+                    android:textSize="14dp" />
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="left|center"
+                    android:id="@+id/llforcustom">
+
+                    <views.textview.TypefaceTextView
+                        geekui:customTypeface="fonts/Ubuntu-R.ttf"
+
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Customization"
+                        android:id="@+id/cshs"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="10dp"
+                        android:textColor="#ee000000"
+                        android:textSize="18dp" />
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="left|center">
+
+                        <views.textview.TypefaceTextView
+                            geekui:customTypeface="fonts/Ubuntu-R.ttf"
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Select Image"
+                            android:id="@+id/selectimggg"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginBottom="5dp"
+                            android:layout_marginRight="10dp"
+                            android:textColor="#ffffff"
+                            android:background="@drawable/bgforsignup"
+                            android:gravity="center"
+                            android:layout_marginTop="5dp"
+                            android:paddingTop="10dp"
+                            android:paddingBottom="10dp"
+                            android:paddingLeft="20dp"
+                            android:paddingRight="20dp" />
+
+                        <ImageView
+                            android:layout_width="90dp"
+                            android:layout_height="80dp"
+                            android:id="@+id/camera"
+                            android:layout_gravity="center|right"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginLeft="30dp"
+                            android:layout_marginBottom="5dp"
+                            android:src="@drawable/sampleimage"
+                            android:scaleType="fitXY"
+                            android:background="@drawable/bgforimg"
+                            android:layout_marginTop="5dp" />
+                    </LinearLayout>
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/textwewe"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:gravity="left|center"
+                        android:hint="Custom Text"
+                        android:background="@null"
+
+                        android:textColor="#000"
+                        android:textColorHint="#7a7979"
+                        android:textSize="20dp"
+                        android:padding="5dp" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:background="#000"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginBottom="10dp" />
+
+                </LinearLayout>
+
+                <views.textview.TypefaceTextView
+                    geekui:customTypeface="fonts/Ubuntu-R.ttf"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="User Reviews"
+                    android:id="@+id/uerrev"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp"
+                    android:textColor="#ee000000"
+                    android:textSize="18dp" />
+
+                <views.textview.TypefaceTextView
+                    geekui:customTypeface="fonts/Ubuntu-L.ttf"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="  Read all reviews"
+                    android:id="@+id/readrev"
+                    android:drawableLeft="@drawable/rightarrowrev"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:textColor="#7a7979"
+                    android:textSize="14dp"
+                    android:paddingLeft="2dp"
+                    android:paddingRight="2dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:gravity="left|center" />
+                <views.textview.TypefaceTextView
+                    geekui:customTypeface="fonts/Ubuntu-R.ttf"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Basic Information"
+                    android:id="@+id/bsinfo"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp"
+                    android:textColor="#ee000000"
+                    android:textSize="18dp" />
+
+                TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="  Shipped to 12201"
+                    android:id="@+id/shipped"
+                    android:drawableLeft="@drawable/edit"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:textColor="#7a7979"
+                    android:textSize="14dp"
+                    android:paddingLeft="2dp"
+                    android:paddingRight="2dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp" />
+                <views.textview.TypefaceTextView
+                    geekui:customTypeface="fonts/Ubuntu-L.ttf"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="  Shipping to United Kingdom from £2.90"
+                    android:id="@+id/repshipll"
+                    android:drawableLeft="@drawable/edit"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:textColor="#7a7979"
+                    android:textSize="14dp"
+                    android:paddingLeft="2dp"
+                    android:paddingRight="2dp"
+
+
+                    android:paddingTop="5dp"
+                    android:paddingBottom="2dp" />
+                <views.textview.TypefaceTextView
+                    geekui:customTypeface="fonts/Ubuntu-L.ttf"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="  Delivered within 5-10 days."
+                    android:id="@+id/del"
+                    android:drawableLeft="@drawable/edit"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:textColor="#7a7979"
+                    android:textSize="14dp"
+                    android:paddingLeft="2dp"
+                    android:paddingRight="2dp"
+                    android:paddingTop="2dp"
+                    android:paddingBottom="5dp" />
+
+                ///////////////////
+                <views.textview.TypefaceTextView
+                    geekui:customTypeface="fonts/Ubuntu-L.ttf"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="  30 days replacement warranty."
+                    android:id="@+id/repll"
+                    android:drawableLeft="@drawable/edit"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:textColor="#7a7979"
+                    android:textSize="14dp"
+                    android:paddingLeft="2dp"
+                    android:paddingRight="2dp"
+
+                    android:layout_marginBottom="10dp"
+                    android:paddingTop="2dp"
+                    android:paddingBottom="2dp" />
+
+                ///////////
+                TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="  Cash On Delivery also available."
+                    android:id="@+id/cod"
+                    android:drawableLeft="@drawable/edit"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:textColor="#7a7979"
+                    android:textSize="14dp"
+                    android:paddingLeft="2dp"
+                    android:paddingRight="2dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp" />
+                TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Seller Information"
+                    android:id="@+id/sellerinfo"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp"
+                    android:textColor="#ee000000"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
+                TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Apporio Enterpises"
+                    android:id="@+id/namesell"
+
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:textColor="#166088"
+                    android:textSize="20dp"
+                    android:paddingLeft="2dp"
+                    android:paddingRight="2dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:textStyle="bold"
+                    android:typeface="serif"
+                    android:layout_marginTop="2dp" />
+                TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="30 days replacement warranty."
+                    android:id="@+id/repl"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:textColor="#7d7d7d"
+                    android:layout_gravity="left|center" />
+
+            </LinearLayout>
+</ScrollView>
+
+            <FrameLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:gravity="center"
+
+                >
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="100dp"
+                    android:layout_height="40dp"
+                    android:gravity="left|center"
+                    android:layout_gravity="top|left"
+                    android:id="@+id/llforback">
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:id="@+id/imageView2"
+                        android:layout_gravity="left|center"
+                        android:layout_marginLeft="15dp"
+                        android:src="@drawable/backwyt" />
+                </LinearLayout>
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:id="@+id/cartll"
+                    android:layout_marginRight="15dp"
+                    android:layout_gravity="right|center"
+                    android:layout_marginTop="2dp">
+
+                    <ImageView
+                        android:layout_width="35dp"
+                        android:layout_height="30dp"
+                        android:id="@+id/cartimg"
+                        android:layout_gravity="center"
+                        android:src="@drawable/cartwyt" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:layout_gravity="center|right"
+                        android:id="@+id/total_item"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:background="@drawable/circleunit"
+                        android:textSize="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:text="0" />
+                </FrameLayout>
+
+            </FrameLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_gravity="bottom|center">
+
+                <views.textview.TypefaceTextView
+                    geekui:customTypeface="fonts/Ubuntu-R.ttf"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="BUY NOW"
+                    android:id="@+id/buynow"
+                    android:gravity="center"
+                    android:textColor="#ffffff"
+                    android:textSize="18dp"
+                    android:background="@color/green"
+                    android:layout_weight="1" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:id="@+id/addtocart"
+                    android:layout_marginLeft="0.5dp"
+                    android:layout_marginRight="0.5dp"
+                    android:background="@color/browndark"
+                    android:layout_weight="2"
+                    android:src="@drawable/addcart"
+                    android:padding="5dp" />
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:id="@+id/fav"
+
+                    android:background="@color/browndark"
+                    android:layout_weight="2"
+                    android:src="@drawable/favwyt"
+                    android:padding="5dp" />
+            </LinearLayout>
+        </FrameLayout>
+
+    </LinearLayout>
+</LinearLayout>

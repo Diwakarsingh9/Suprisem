@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#000000</color>
+    <color name="colorPrimaryDark">#000000</color>
+    <color name="colorAccent">#009F9D</color>
+    <color name="black">#000000</color>
+    <color name="green">#009F9D</color>
+    <color name="white">#ffffff</color>
+    <color name="statusbarcolor">#ffffff</color>
+    <color name="orange">#ffffdc7e</color>
+    <color name="grey">#ffd3d3d3</color>
+    <color name="browndark">#2e2d2d</color>
+    <color name="lightblack">#333333</color>
+    <color name="blue">#ff82e0ff</color>
+    <color name="yellow">#fffffbae</color>
+    <color name="red">#fff10800</color>
+    <color name="list_item_pressed">#1A000000</color>
+</resources>

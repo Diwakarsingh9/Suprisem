@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:geekui="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="foodorderingapp.apporio.com.suprisem.CartActivity"
+    android:orientation="vertical"
+    android:background="#ffffff">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <FrameLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@color/white"
+            android:gravity="center"
+
+            android:elevation="5dp">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:id="@+id/imageView2"
+                android:layout_gravity="left|center"
+                android:layout_marginLeft="15dp"
+                android:src="@drawable/back" />
+
+            <views.textview.TypefaceTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CHECK OUT"
+                android:id="@+id/header"
+                geekui:customTypeface="fonts/Ubuntu-R.ttf"
+                android:layout_weight="1"
+                android:textSize="22dp"
+                android:layout_gravity="center"
+                android:textColor="@color/lightblack" />
+
+        </FrameLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="7dp"
+            android:background="@drawable/bgforheading"/>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="45dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp">
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:gravity="left|center">
+
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:id="@+id/imageView6"
+                        android:layout_marginRight="5dp"
+                        android:src="@drawable/marker" />
+
+                    <views.textview.TypefaceTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Delivery Address"
+                        android:id="@+id/textView9"
+                        geekui:customTypeface="fonts/Ubuntu-R.ttf"
+
+                        android:textColor="@color/browndark"
+                        android:textSize="20dp"
+                        android:layout_weight="1" />
+
+                    <views.textview.TypefaceTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Change"
+                        geekui:customTypeface="fonts/Ubuntu-L.ttf"
+
+                        android:id="@+id/chng"
+                        android:textColor="#166088"
+                        android:textSize="20dp" />
+                </LinearLayout>
+
+                <views.textview.TypefaceTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="B 467, Spaze It tech Park, Apporio Infolabs Pvt. Ltd. , Sohna Road, Gurgaon, Haryana, 122001 \nMobile no - xxxxxx0098"
+                    android:id="@+id/addresssss"
+                    android:layout_marginTop="5dp"
+                    geekui:customTypeface="fonts/Ubuntu-L.ttf"
+
+                    android:textColor="#000"
+                    android:textSize="15dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp" />
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="5dp"
+                    android:gravity="left|center">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:id="@+id/asdwd"
+                        android:layout_marginRight="5dp"
+                        android:src="@drawable/wallet"
+                        android:layout_marginLeft="5dp" />
+
+
+                    <views.textview.TypefaceTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Select Payment Method"
+                        android:id="@+id/sdsd"
+                        geekui:customTypeface="fonts/Ubuntu-R.ttf"
+
+                        android:textColor="@color/browndark"
+                        android:textSize="20dp"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="5dp" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:id="@+id/llforrb">
+
+                </LinearLayout>
+            </LinearLayout>
+</ScrollView>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left|center"
+                android:layout_gravity="bottom|center"
+                android:background="@color/browndark">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Total : INR 67777 /-   "
+                    android:id="@+id/textView7"
+                    android:textColor="#ffffff"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    android:typeface="serif"
+                    android:paddingRight="20dp"
+                    android:gravity="left|center"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="Place Order"
+                    android:id="@+id/porder"
+                    android:textColor="#ffffff"
+                    android:textSize="15dp"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:background="@drawable/bgforchk"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp" />
+            </LinearLayout>
+
+
+        </FrameLayout>
+
+    </LinearLayout>
+</LinearLayout>

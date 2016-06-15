@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:geekui="http://schemas.android.com/apk/res-auto">
+    <views.textview.TypefaceTextView
+        geekui:customTypeface="fonts/Ubuntu-R.ttf"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/textView10"
+        android:textSize="18dp"
+         android:textColor="#000"
+        android:layout_gravity="center_horizontal"
+        android:gravity="left|center"
+        android:paddingLeft="5dp"
+        android:paddingTop="10dp"
+        android:paddingRight="5dp"
+        android:paddingBottom="10dp" />
+</LinearLayout>

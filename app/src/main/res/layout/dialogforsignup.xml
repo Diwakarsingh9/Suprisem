@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:geekui="http://schemas.android.com/apk/res-auto"
+    tools:context="foodorderingapp.apporio.com.suprisem.CategoriesActivity"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#ffffff"
+        android:alpha="0.95"></LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="top|center"
+        android:background="#ffffff">
+
+        <FrameLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+
+            android:elevation="5dp">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:id="@+id/closed"
+                android:layout_gravity="right|center_vertical"
+                android:layout_marginLeft="15dp"
+                android:src="@drawable/close"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp" />
+
+        </FrameLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="#bbbbbb"/>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:id="@+id/imageViewcc"
+                android:layout_gravity="center"
+                android:src="@drawable/surprisem"
+                android:adjustViewBounds="false"
+                android:background="@drawable/buttonshadow"
+                android:padding="15dp"
+                android:layout_marginTop="20dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginTop="30dp">
+
+            <views.textview.TypefaceTextView
+                geekui:customTypeface="fonts/Ubuntu-L.ttf"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Your phone number is secure with us. We wont share your details with anyone."
+                android:id="@+id/textView8"
+                android:gravity="left|center"
+                android:textColor="@color/black"
+                android:textSize="14dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="10dp" />
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="left|center"
+                android:layout_marginBottom="2dp">
+
+                <Spinner
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/spinner"
+                    android:layout_marginLeft="20dp"
+                    android:background="@android:color/transparent"
+                    android:spinnerMode="dropdown"
+                    android:gravity="center" />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/mob"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="20dp"
+                    android:textColor="#000"
+                    android:hint="Mobile number*"
+                    android:singleLine="true"
+                    android:background="@null"
+                    android:textColorHint="#7a7979"
+                    android:textSize="20dp"
+                    android:padding="5dp"
+                    android:inputType="number"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/black"
+                android:layout_marginTop="2dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="2dp" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/password"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:gravity="left|center"
+                android:hint="Password*"
+                android:background="@null"
+
+                android:textColor="#000"
+                android:textColorHint="#7a7979"
+                android:textSize="20dp"
+                android:padding="5dp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="#000"
+                android:layout_marginTop="2dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="5dp" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/confirmpassword"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:gravity="left|center"
+                android:background="@null"
+
+                android:hint="Confirm Passowrd*"
+                android:textColor="#000"
+                android:textColorHint="#7a7979"
+                android:textSize="20dp"
+                android:padding="5dp"
+                android:layout_marginTop="5dp" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="#000"
+                android:layout_marginTop="2dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="10dp" />
+            <!--<LinearLayout-->
+                <!--android:orientation="horizontal"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_marginTop="10dp"-->
+                <!--android:layout_marginLeft="20dp"-->
+                <!--android:layout_marginRight="20dp"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:gravity="left|center">-->
+
+
+                <!--<Spinner-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:id="@+id/spinner"-->
+                    <!--android:spinnerMode="dropdown"-->
+                    <!--android:background="@null"-->
+                    <!--android:gravity="center" />-->
+                <!--<View-->
+                    <!--android:layout_width="0.5dp"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:background="#ffffff"-->
+                    <!--android:layout_marginLeft="5dp"-->
+                    <!--android:layout_marginRight="5dp" />-->
+                <!--<EditText-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:id="@+id/mob"-->
+                    <!--android:background="@null"-->
+                    <!--android:gravity="left|center"-->
+                    <!--android:hint="Mobile number"-->
+                    <!--android:textColor="#ffffff"-->
+                    <!--android:textColorHint="#99ffffff"-->
+                    <!--android:textSize="20dp"-->
+                    <!--android:padding="5dp"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:inputType="number" />-->
+            <!--</LinearLayout>-->
+
+            <views.textview.TypefaceTextView
+                geekui:customTypeface="fonts/Ubuntu-R.ttf"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Sign up"
+                android:id="@+id/signup"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="10dp"
+                android:gravity="center"
+                android:padding="10dp"
+                android:textColor="#ffffff"
+                android:textSize="18dp"
+                android:background="@drawable/bgforchk" />
+
+            <views.textview.TypefaceTextView
+                geekui:customTypeface="fonts/Ubuntu-R.ttf"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Log in"
+                android:id="@+id/login"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="10dp"
+                android:gravity="center"
+                android:padding="10dp"
+                android:textColor="#ffffff"
+                android:textSize="18dp"
+                android:background="@drawable/bgforsignup" />
+        </LinearLayout>
+
+    </LinearLayout>
+</FrameLayout>
