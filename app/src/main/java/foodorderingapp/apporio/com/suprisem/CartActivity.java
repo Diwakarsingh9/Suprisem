@@ -4,32 +4,60 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import foodorderingapp.apporio.com.suprisem.Database.CartTable;
+import foodorderingapp.apporio.com.suprisem.Database.DBManager;
+import foodorderingapp.apporio.com.suprisem.Parsing.parsingforCart;
+import foodorderingapp.apporio.com.suprisem.Parsing.parsingforlogin;
+import foodorderingapp.apporio.com.suprisem.Parsing.parsingforsignup;
 import foodorderingapp.apporio.com.suprisem.adapter.Cartadapter;
+import io.realm.RealmResults;
+import views.ProgressWheel;
 
 public class CartActivity extends Activity {
     ImageView back,close;
-    ListView lv;
-    TextView checkout;
+    public static ListView lv;
+    public static TextView checkout,totalprice;
     public static CartActivity cartact;
     public static Spinner sp22;
+    static DBManager dbm;
+    public static List<CartTable> ct;
+    boolean previouslyStarted;
+    public static Dialog dialog,dialog2;
+    public static ProgressWheel pb,pb22,pb23;
+    public static RealmResults<CartTable> ct4;
+    public static ArrayList<String> productid = new ArrayList<String>();
+    public static ArrayList<String> quantitys = new ArrayList<String>();
+    public static ArrayList<String> options = new ArrayList<String>();
     private static final String[] m_Codes = { "91","376", "971",
             "93", "355", "374", "599", "244", "672", "54", "43", "61", "297",
             "994", "387", "880", "32", "226",
@@ -40,7 +68,7 @@ public class CartActivity extends Activity {
             "500", "691", "298", "33", "241", "44", "995", "233", "350", "299", "220", "224", "240", "30", "502", "245", "592", "852", "504", "385", "509", "36", "62", "353", "972", "44", "964",
             "98", "39", "962", "81", "254", "996", "855", "686", "269", "850", "82", "965", "7", "856", "961", "423", "94", "231", "266", "370", "352", "371", "218", "212", "377", "373", "382", "261", "692", "389", "223", "95", "976", "853", "222", "356",
             "230", "960", "265", "52", "60", "258", "264", "687", "227", "234", "505", "31", "47", "977", "674", "683", "64", "968", "507", "51", "689", "675", "63", "92", "48", "508", "870", "1", "351", "680", "595", "974", "40", "381", "7", "250", "966", "677", "248", "249", "46", "65", "290", "386", "421", "232", "378", "221", "252", "597", "239", "503", "963", "268", "235", "228", "66", "992", "690", "670", "993", "216", "676", "90", "688", "886", "255", "380", "256", "1", "598", "998", "39", "58", "84", "678", "681", "685", "967", "262", "27", "260", "263"};
-
+    String spinnermob = "+91";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,9 +77,17 @@ public class CartActivity extends Activity {
         setContentView(R.layout.activity_cart);
         back= (ImageView)findViewById(R.id.imageView2);
         checkout= (TextView)findViewById(R.id.cok);
+        totalprice= (TextView)findViewById(R.id.totalprice);
+        pb= (ProgressWheel)findViewById(R.id.pb123);
         lv= (ListView)findViewById(R.id.listviewcart);
-        lv.setAdapter(new Cartadapter(CartActivity.this));
+        dbm = new DBManager(CartActivity.this);
+        Log.e("details",""+getCartdetails());
+        parsingforCart.parsing(CartActivity.this, "" + getCartdetails());
+       // lv.setAdapter(new Cartadapter(CartActivity.this));
         cartact = CartActivity.this;
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        previouslyStarted = prefs.getBoolean("pref_previously_started", false);
+
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -61,7 +97,16 @@ public class CartActivity extends Activity {
         checkout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               showdialogforsignin();
+                if (!previouslyStarted) {
+                    showdialogforsignin();
+
+                } else {
+                    Intent in = new Intent(CartActivity.this,Payment_and_deliveryActivity.class);
+                   in.putExtra("Customer_id",""+prefs.getString("Customerid","null"));
+                    startActivity(in);
+
+                }
+
             }
         });
 
@@ -70,9 +115,52 @@ public class CartActivity extends Activity {
 
 
     }
+
+    public static JSONObject getCartdetails() {
+        JSONObject obj = new JSONObject();
+        ct4 = dbm.getFullTable();
+        JSONArray jsonArray2 = new JSONArray();
+        try {
+            obj.put("products",jsonArray2);
+            obj.put("language_id","1");
+
+
+
+            for (int i = 0; i < ct4.size(); i++) {
+                JSONObject jinnerobject2 = new JSONObject();
+                jinnerobject2.put("product_id", ct4.get(i).getproductid());
+                jinnerobject2.put("quantity",ct4.get(i).getQuantity());
+                if(ct4.get(i).getOption().equals("")){
+                    jinnerobject2.put("option", new JSONObject());
+
+                }
+                else {
+                    jinnerobject2.put("option", new JSONObject("{\"" + (ct4.get(i).getOption()) + "\"}"));
+                }
+                jsonArray2.put(jinnerobject2);
+            }
+
+            //     Log.e("JSON ", jinnerobject.toString());
+            Log.e("JSONARRAYrest ", jsonArray2.toString());
+
+
+        } catch (JSONException e) {
+            Log.e("errrr",""+e);
+            e.printStackTrace();
+        }
+        return obj;
+    }
+
+
+
+
+    public static void loadlistview() {
+
+    }
+
     public  void showdialogforsignin() {
 
-        final Dialog dialog = new Dialog(CartActivity.this,android.R.style.Theme_Translucent);
+      dialog = new Dialog(CartActivity.this,android.R.style.Theme_Translucent);
 
         //  dialog.getWindow().setStatusBarColor(Loginscreenactivity.this.getResources().getColor(R.color.example_color));
 
@@ -85,9 +173,12 @@ public class CartActivity extends Activity {
 
         dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         close = (ImageView)dialog.findViewById(R.id.closed);
+        final EditText username = (EditText)dialog.findViewById(R.id.email);
+        final EditText passowrd = (EditText)dialog.findViewById(R.id.pass);
         TextView signup = (TextView)dialog.findViewById(R.id.signup);
         TextView loginn = (TextView)dialog.findViewById(R.id.Login);
         TextView forgotpw = (TextView)dialog.findViewById(R.id.frgt);
+        pb22= (ProgressWheel)dialog.findViewById(R.id.pbd);
         signup.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -102,9 +193,12 @@ public class CartActivity extends Activity {
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                Intent in = new Intent(CartActivity.this,Payment_and_deliveryActivity.class);
-                startActivity(in);
-                dialog.dismiss();
+                if(username.getText().toString().trim().equals("")||passowrd.getText().toString().trim().equals("")){
+                    Toast.makeText(CartActivity.this, "Required fields missing !!!", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    parsingforlogin.parsing(CartActivity.this, username.getText().toString().trim(), passowrd.getText().toString().trim());
+                }
             }
         });
         forgotpw.setOnClickListener(new View.OnClickListener() {
@@ -114,6 +208,7 @@ public class CartActivity extends Activity {
                 // TODO Auto-generated method stub
 
                 Toast.makeText(CartActivity.this, "We have sent instructions to reset password.", Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
             }
         });
 
@@ -138,47 +233,90 @@ public class CartActivity extends Activity {
 
     public  void showdialogforsignup() {
 
-        final Dialog dialog = new Dialog(CartActivity.this,android.R.style.Theme_Translucent);
+      dialog2 = new Dialog(CartActivity.this,android.R.style.Theme_Translucent);
 
         //  dialog.getWindow().setStatusBarColor(Loginscreenactivity.this.getResources().getColor(R.color.example_color));
 
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        Window window = dialog.getWindow();
-        dialog.setCancelable(true);
+        dialog2.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        Window window = dialog2.getWindow();
+        dialog2.setCancelable(true);
         window.setGravity(Gravity.CENTER);
         window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        dialog.setContentView(R.layout.dialogforsignup);
+        dialog2.setContentView(R.layout.dialogforsignup);
 
-        dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-        close = (ImageView)dialog.findViewById(R.id.closed);
-        sp22 = (Spinner)dialog.findViewById(R.id.spinner);
-
-        TextView login = (TextView)dialog.findViewById(R.id.login);
-        TextView signup = (TextView)dialog.findViewById(R.id.signup);
+        dialog2.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        close = (ImageView)dialog2.findViewById(R.id.closed);
+        sp22 = (Spinner)dialog2.findViewById(R.id.spinner);
+        final EditText firstname2 = (EditText)dialog2.findViewById(R.id.firstname22);
+        final EditText lastname = (EditText)dialog2.findViewById(R.id.lastname);
+        final EditText mobile = (EditText)dialog2.findViewById(R.id.mob);
+        final EditText passowrd = (EditText)dialog2.findViewById(R.id.password);
+        final EditText confirmpass = (EditText)dialog2.findViewById(R.id.confirmpassword);
+        final EditText username = (EditText)dialog2.findViewById(R.id.email);
+        final EditText address = (EditText)dialog2.findViewById(R.id.address);
+        final EditText city = (EditText)dialog2.findViewById(R.id.city);
+        final EditText state = (EditText)dialog2.findViewById(R.id.state);
+        final EditText country = (EditText)dialog2.findViewById(R.id.country);
+        final EditText pincode = (EditText)dialog2.findViewById(R.id.pincode2);
+        pb23= (ProgressWheel)dialog2.findViewById(R.id.pbd);
+        TextView login = (TextView)dialog2.findViewById(R.id.login);
+        TextView signup = (TextView)dialog2.findViewById(R.id.signup);
 
         login.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
+
                 showdialogforsignin();
-                dialog.dismiss();
+                dialog2.dismiss();
             }
         });
 
 
         ArrayAdapter adp = new ArrayAdapter(getApplicationContext(),R.layout.itemlayoutformobile,R.id.mobcode,m_Codes);
         sp22.setAdapter(adp);
+        sp22.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                spinnermob = "+"+parent.getItemAtPosition(position).toString();
+            }
 
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                spinnermob = "+91";
+            }
+        });
 
         signup.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                Intent in = new Intent(CartActivity.this, Payment_and_deliveryActivity.class);
-                startActivity(in);
-                dialog.dismiss();
+                if (firstname2.getText().toString().trim().equals("") ||
+                        mobile.getText().toString().trim().equals("") ||
+                        passowrd.getText().toString().trim().equals("") ||
+                        confirmpass.getText().toString().trim().equals("") ||
+                        username.getText().toString().trim().equals("") ||
+                        address.getText().toString().trim().equals("") ||
+                        city.getText().toString().trim().equals("") ||
+                        state.getText().toString().trim().equals("") ||
+                        country.getText().toString().trim().equals("") ||
+                        pincode.getText().toString().trim().equals("")) {
+                    Toast.makeText(CartActivity.this, "Required fields missing !!!", Toast.LENGTH_SHORT).show();
+                } else {
+                    if (passowrd.getText().toString().trim().equals(confirmpass.getText().toString().trim())) {
+                        Toast.makeText(CartActivity.this, "Passwords do not match.", Toast.LENGTH_SHORT).show();
+                    } else {
+                        parsingforsignup.parsing(CartActivity.this,firstname2.getText().toString().trim(),
+                                lastname.getText().toString().trim(),spinnermob+mobile.getText().toString().trim(),
+                                username.getText().toString().trim(), passowrd.getText().toString().trim(),
+                                confirmpass.getText().toString().trim(), address.getText().toString().trim(),
+                                city.getText().toString().trim(), state.getText().toString().trim(),
+                                country.getText().toString().trim(), pincode.getText().toString().trim());
+                    }
+                }
+
             }
         });
 
@@ -188,11 +326,11 @@ public class CartActivity extends Activity {
             public void onClick(View v) {
                 // TODO Auto-generated method stub
 
-                dialog.dismiss();
+                dialog2.dismiss();
             }
         });
 
-        dialog.show();
+        dialog2.show();
     }
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public void setStatusBarColor(){

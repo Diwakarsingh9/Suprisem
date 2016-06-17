@@ -47,6 +47,7 @@ import com.etsy.android.grid.StaggeredGridView;
 
 import java.util.ArrayList;
 
+import foodorderingapp.apporio.com.suprisem.Database.DBManager;
 import foodorderingapp.apporio.com.suprisem.adapter.SampleAdapter;
 import foodorderingapp.apporio.com.suprisem.fragment.CATEGORIESfragment;
 import foodorderingapp.apporio.com.suprisem.fragment.Favfragment;
@@ -95,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
             R.drawable.partner,
             R.drawable.logout};
     ActionBarDrawerToggle mDrawerToggle;
-
+    static DBManager dbm;
     public TextView head;
     public static RecyclerView mRecyclerView;                           // Declaring RecyclerView
     public static RecyclerView.Adapter mAdapter;                        // Declaring Adapter For Recycler View
@@ -116,7 +117,8 @@ public class MainActivity extends AppCompatActivity {
         llfrhome = (LinearLayout) findViewById(R.id.homell);
         llforcategories = (LinearLayout) findViewById(R.id.categoryll);
         llforfav = (LinearLayout) findViewById(R.id.favll);
-
+        dbm = new DBManager(MainActivity.this);
+       // dbm.clearCartTable();
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.drawable.menu);

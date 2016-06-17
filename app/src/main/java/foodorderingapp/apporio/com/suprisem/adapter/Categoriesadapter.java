@@ -105,10 +105,10 @@ public class Categoriesadapter extends BaseAdapter {
         holder.product_name = (TextView) convertView.findViewById(R.id.txt);
         holder.mNetworkImageView = (NetworkImageView) convertView.findViewById(R.id.img);
 
-        mImageLoader.get(catimg.get(position), ImageLoader.getImageListener(holder.mNetworkImageView,
+        mImageLoader.get(catimg.get(position).replace(" ","%20"), ImageLoader.getImageListener(holder.mNetworkImageView,
                 R.drawable.stub, R.drawable
                         .errorimg));
-        holder.mNetworkImageView.setImageUrl(catimg.get(position), mImageLoader);
+        holder.mNetworkImageView.setImageUrl(catimg.get(position).replace(" ","%20"), mImageLoader);
 
             holder.product_name.setText(catname.get(position));
 

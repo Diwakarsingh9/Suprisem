@@ -17,10 +17,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <ImageView
+            <com.android.volley.toolbox.NetworkImageView
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
-                android:id="@+id/imageView4"
+                android:id="@+id/img"
                 android:layout_weight="1.5"
                 android:layout_marginTop="5dp"
                 android:layout_marginLeft="10dp"
@@ -37,7 +37,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Converse Casual Strips Shoes"
-                    android:id="@+id/textView"
+                    android:id="@+id/namesss"
                     geekui:customTypeface="fonts/Ubuntu-R.ttf"
 
                     android:layout_gravity="center_horizontal"
@@ -53,8 +53,7 @@
                 <views.textview.TypefaceTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Lorem ipsum dolor sit amet, placerat in. Nunc dolor nulla leo, sit non aenean, neque leo, ipsum viverra lorem. Enim porta dui lacinia at, ipsum amet wisi justo, vitae turpis magnis sollicitudin felis odio quam. Nec eros donec justo sollicitudin aenean dolor, magna aenean, suscipit hendrerit proin facilisis lectus, est penatibus euismod. Accumsan id tincidunt vel, ipsum tempus suscipit vel integer, aliquam erat qui risus, pellentesque vel consequat quam a semper pellentesque. Iaculis pulvinar sapien. Cras euismod suscipit purus nullam etiam, pharetra integer suscipit class, diam nullam tristique mauris ante. "
-                    android:id="@+id/textView3"
+                    android:id="@+id/descp"
                     geekui:customTypeface="fonts/Ubuntu-R.ttf"
 
                     android:layout_marginLeft="10dp"
@@ -74,8 +73,8 @@
                     <views.textview.TypefaceTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Blue"
-                        android:id="@+id/oldprice"
+                        android:text=""
+                        android:id="@+id/color"
                         geekui:customTypeface="fonts/Ubuntu-L.ttf"
 
                         android:layout_marginLeft="10dp"
@@ -85,12 +84,13 @@
                         android:layout_gravity="left|center"
                         android:textSize="15dp"
                         android:layout_weight="1"
-                        android:gravity="left|center" />
+                        android:gravity="left|center"
+                        android:visibility="gone" />
                     <views.textview.TypefaceTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="£ 337.90"
-                        android:id="@+id/djfg"
+                        android:id="@+id/rate"
                         geekui:customTypeface="fonts/Ubuntu-R.ttf"
 
                         android:layout_marginLeft="10dp"
@@ -162,22 +162,48 @@
             android:layout_marginBottom="2dp"
             android:layout_marginRight="5dp"
             android:layout_marginLeft="5dp" />
-        <views.textview.TypefaceTextView
+
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="DELIVERY :  Free  (within 5-10 days)"
-            android:id="@+id/del"
-            geekui:customTypeface="fonts/Ubuntu-R.ttf"
+            android:gravity="left|center">
 
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:textColor="#7a7979"
-            android:textSize="14dp"
-            android:paddingLeft="2dp"
-            android:paddingRight="2dp"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
-            android:textStyle="bold" />
+            <views.textview.TypefaceTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="DELIVERY :  Free  (within 5-10 days)"
+                android:id="@+id/del"
+                geekui:customTypeface="fonts/Ubuntu-R.ttf"
+
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:textColor="#7a7979"
+                android:textSize="14dp"
+                android:paddingLeft="2dp"
+                android:paddingRight="2dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:textStyle="bold"
+                android:layout_weight="1" />
+            <views.textview.TypefaceTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Remove"
+                android:id="@+id/delete"
+                geekui:customTypeface="fonts/Ubuntu-R.ttf"
+
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:textColor="#a61c1e"
+                android:textSize="14dp"
+                android:paddingLeft="2dp"
+                android:paddingRight="2dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:textStyle="bold"
+ />
+        </LinearLayout>
 
         <View
             android:layout_width="match_parent"

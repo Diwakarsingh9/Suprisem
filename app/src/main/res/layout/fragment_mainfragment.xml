@@ -16,12 +16,16 @@
         android:gravity="top|center"
         android:background="@color/white">
 
-        <com.etsy.android.grid.StaggeredGridView
-            android:id="@+id/grid_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:item_margin="0dp"
-            app:column_count="2" />
+        <GridView
+            android:id="@+id/gridview"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:columnWidth="90dp"
+            android:background="#b1ffffff"
+            android:numColumns="2"
+            android:stretchMode="columnWidth"
+            android:gravity="center"
+            android:layout_marginLeft="1dp" />
     </LinearLayout>
     <views.ProgressWheel
         android:id="@+id/pb155"

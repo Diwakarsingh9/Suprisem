@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,7 +27,7 @@ public class Mainfragment extends Fragment implements
         AbsListView.OnScrollListener, AbsListView.OnItemClickListener {
 
 
-    public static StaggeredGridView mGridView;
+    public static GridView mGridView;
     private boolean mHasRequestedMore;
     public static SampleAdapter mAdapter;
     public static ProgressWheel pb;
@@ -41,7 +42,7 @@ public class Mainfragment extends Fragment implements
     @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_mainfragment, container, false);
-        mGridView = (StaggeredGridView) v.findViewById(R.id.grid_view);
+        mGridView = (GridView) v.findViewById(R.id.gridview);
         pb = (ProgressWheel) v.findViewById(R.id.pb155);
         parsingforMain_featuredlist.parsing(getContext());
         mGridView.setOnScrollListener(this);

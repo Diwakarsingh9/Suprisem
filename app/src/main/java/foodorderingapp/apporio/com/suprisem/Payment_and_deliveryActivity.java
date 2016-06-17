@@ -28,6 +28,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import foodorderingapp.apporio.com.suprisem.Parsing.parsingforchangeaddress;
+import foodorderingapp.apporio.com.suprisem.Parsing.parsingfordeliveryaddress;
+import views.ProgressWheel;
+
 public class Payment_and_deliveryActivity extends Activity {
 
     String []cb={"Net Banking","Debit Card","Credit Card","Cash On Delivery"};
@@ -35,10 +39,15 @@ public class Payment_and_deliveryActivity extends Activity {
     Boolean []checkedss;
     ImageView closed;
     TextView saved,placeorder;
-    EditText name, address1, address2, cityss, state, pincode, mobile;
+    EditText name, address1, lastname, cityss, state, pincode, country;
     LinearLayout llforradiobuttonadding;
     String radiobutton="";
-    TextView changeaddress,addresssssss;
+    public  static Dialog dialog;
+    public  static ProgressWheel pb111,pb232;
+    public  static TextView changeaddress,addresssssss;
+    public  static String Customer_id = "";
+    public  static String Address_id = "";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +58,10 @@ public class Payment_and_deliveryActivity extends Activity {
         changeaddress = (TextView)findViewById(R.id.chng);
         addresssssss = (TextView)findViewById(R.id.addresssss);
         placeorder = (TextView)findViewById(R.id.porder);
+        pb111 = (ProgressWheel)findViewById(R.id.pb111);
 
+        Customer_id = getIntent().getStringExtra("Customer_id");
+        parsingfordeliveryaddress.parsing(Payment_and_deliveryActivity.this, Customer_id);
         checkedss=new Boolean[cb.length];
         for(int i=0;i<cb.length;i++){
               checkedss[i]=false;
@@ -112,7 +124,7 @@ public class Payment_and_deliveryActivity extends Activity {
 
     public  void showchangeaddressdialog() {
 
-        final Dialog dialog = new Dialog(Payment_and_deliveryActivity.this,android.R.style.Theme_Translucent);
+     dialog = new Dialog(Payment_and_deliveryActivity.this,android.R.style.Theme_Translucent);
 
         //  dialog.getWindow().setStatusBarColor(Loginscreenactivity.this.getResources().getColor(R.color.example_color));
 
@@ -127,13 +139,13 @@ public class Payment_and_deliveryActivity extends Activity {
         closed = (ImageView)dialog.findViewById(R.id.closed);
           name = (EditText)dialog.findViewById(R.id.name);
           address1 = (EditText)dialog.findViewById(R.id.address1);
-            address2 = (EditText)dialog.findViewById(R.id.address2);
+            lastname = (EditText)dialog.findViewById(R.id.lastname);
          pincode = (EditText)dialog.findViewById(R.id.pincode);
          cityss = (EditText)dialog.findViewById(R.id.city);
          state = (EditText)dialog.findViewById(R.id.State);
-         mobile = (EditText)dialog.findViewById(R.id.mobile);
+         country = (EditText)dialog.findViewById(R.id.country11);
          saved = (TextView)dialog.findViewById(R.id.savedd);
-
+        pb232 = (ProgressWheel)dialog.findViewById(R.id.pb111);
 
 
         saved.setOnClickListener(new View.OnClickListener() {
@@ -145,20 +157,24 @@ public class Payment_and_deliveryActivity extends Activity {
                     InputMethodManager imm = (InputMethodManager)Payment_and_deliveryActivity.this.getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
                 }
-                if(address1.getText().toString().trim().equals("")||address2.getText().toString().trim().equals("")||
+                if(address1.getText().toString().trim().equals("")||lastname.getText().toString().trim().equals("")||
                         cityss.getText().toString().trim().equals("")||state.getText().toString().trim().equals("")||
-                        pincode.getText().toString().trim().equals("") ||mobile.getText().toString().trim().equals("") )
+                        pincode.getText().toString().trim().equals("") ||country.getText().toString().trim().equals("") )
                 {
                     Toast.makeText(Payment_and_deliveryActivity.this, "Required fields missing !!!!", Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    addresssssss.setText("" + address1.getText().toString()
-                            + ", " + address2.getText().toString() +
-                            ", " + cityss.getText().toString() + ", " +
-                            state.getText().toString() + ", " +
-                            pincode.getText().toString() + ", \nMobile No - " +
-                            mobile.getText().toString());
-                    dialog.dismiss();
+                    parsingforchangeaddress.parsing(Payment_and_deliveryActivity.this,Address_id,
+                            Customer_id,name.getText().toString().trim(),lastname.getText().toString(),"null",address1.getText().toString().trim(),
+                            cityss.getText().toString().trim(),pincode.getText().toString().trim(),country.getText().toString(),
+                            state.getText().toString().trim());
+//                    addresssssss.setText("" + address1.getText().toString()
+//                            + ", " + address2.getText().toString() +
+//                            ", " + cityss.getText().toString() + ", " +
+//                            state.getText().toString() + ", " +
+//                            pincode.getText().toString() + "\nMobile No - " +
+//                            mobile.getText().toString());
+                  //  dialog.dismiss();
                 }
             }
         });

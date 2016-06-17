@@ -98,10 +98,10 @@ public class Sub_catlistadapter extends BaseAdapter {
 
         holder.mNetworkImageView = (NetworkImageView) convertView.findViewById(R.id.img);
 
-        mImageLoader.get(s_catimg.get(position), ImageLoader.getImageListener(holder.mNetworkImageView,
+        mImageLoader.get(s_catimg.get(position).replace(" ", "%20"), ImageLoader.getImageListener(holder.mNetworkImageView,
                 R.drawable.stub, R.drawable
                         .errorimg));
-        holder.mNetworkImageView.setImageUrl(s_catimg.get(position), mImageLoader);
+        holder.mNetworkImageView.setImageUrl(s_catimg.get(position).replace(" ","%20"), mImageLoader);
 
         holder.product_name.setText(s_catname.get(position));
 

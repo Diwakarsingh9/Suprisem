@@ -38,10 +38,10 @@ public class Basefragmentforphotoopeninner extends Fragment {
         String de= getArguments().getString("msg2");
         mImageLoader = VolleySingleton.getInstance(getContext())
                 .getImageLoader();
-        mImageLoader.get(""+de, ImageLoader.getImageListener(img,
+        mImageLoader.get(""+de.replace(" ","%20"), ImageLoader.getImageListener(img,
                 R.drawable.stub, R.drawable
                         .errorimg));
-        img.setImageUrl(""+de, mImageLoader);
+        img.setImageUrl(""+de.replace(" ","%20"), mImageLoader);
 
 
 //            title.setText(de);

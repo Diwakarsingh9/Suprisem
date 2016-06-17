@@ -100,10 +100,10 @@ public class Productlistadapter extends BaseAdapter {
         holder.product_name = (TextView) convertView.findViewById(R.id.txt);
         holder.mNetworkImageView = (NetworkImageView) convertView.findViewById(R.id.img);
 
-        mImageLoader.get(pro_img.get(position), ImageLoader.getImageListener(holder.mNetworkImageView,
+        mImageLoader.get(pro_img.get(position).replace(" ", "%20"), ImageLoader.getImageListener(holder.mNetworkImageView,
                 R.drawable.stub, R.drawable
                         .errorimg));
-        holder.mNetworkImageView.setImageUrl(pro_img.get(position), mImageLoader);
+        holder.mNetworkImageView.setImageUrl(pro_img.get(position).replace(" ","%20"), mImageLoader);
 
         holder.product_name.setText(pro_name.get(position));
 

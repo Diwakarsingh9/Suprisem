@@ -46,6 +46,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import foodorderingapp.apporio.com.suprisem.Database.DBManager;
 import foodorderingapp.apporio.com.suprisem.Setter_getter.Innermost2_pro_options;
 import foodorderingapp.apporio.com.suprisem.Setter_getter.Innermost_all_pro_options;
 import foodorderingapp.apporio.com.suprisem.adapter.MyAdapter1;
@@ -67,7 +68,9 @@ public class InnerPrductActivity extends FragmentActivity {
 //    TextView Oldprice,sizetxt,colortxt,quantitytxt;
     ArrayList<String> Option_id;
     ArrayList<String> Option_values;
-//    ArrayList<String> quantityarr = new ArrayList<>();
+    static DBManager dbm;
+
+    //    ArrayList<String> quantityarr = new ArrayList<>();
     LinearLayout sizell,colorll,quantityll;
     CirclePageIndicator titleIndicator;
     public  static FragmentManager fragmentManager;
@@ -77,7 +80,7 @@ public class InnerPrductActivity extends FragmentActivity {
     LinearLayout llforcust,llforoptions;
     String pro_id, pro_desc,pro_name,pro_price;
     ArrayList<String> imagess = new ArrayList<>();
-
+    ArrayList<String> pro_options_id2 ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setStatusBarColor();
@@ -104,6 +107,8 @@ public class InnerPrductActivity extends FragmentActivity {
         camera=(ImageView)findViewById(R.id.camera);
         //Oldprice = (TextView) findViewById(R.id.oldprice);
         sizell = (LinearLayout) findViewById(R.id.sizell);
+        dbm = new DBManager(InnerPrductActivity.this);
+
         Option_id = new ArrayList<>();
         Option_values = new ArrayList<>();
         //colorll = (LinearLayout) findViewById(R.id.colorll);
@@ -149,17 +154,6 @@ public class InnerPrductActivity extends FragmentActivity {
             }
         });
 
-
-//        }
-//        else{
-//            llforcust.setVisibility(View.VISIBLE);
-//
-//        }
-
-        // quantityll = (LinearLayout) findViewById(R.id.quantityll);
-
-       // shipped2.setText(Html.fromHtml("&nbsp;&nbsp;Shipped to 122001  &nbsp;"+"<font color='#0370B4'><u>Change</u></font>"));
-
         cartll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -167,26 +161,6 @@ public class InnerPrductActivity extends FragmentActivity {
                 startActivity(in);
             }
         });
-
-
-
-//        for(int j=0;j<51;j++){
-//            quantityarr.add(""+j);
-//        }
-//
-//        sizearr.add("Size EU 35");
-//        sizearr.add("Size EU 36");
-//        sizearr.add("Size EU 38");
-//        sizearr.add("Size EU 40");
-//        sizearr.add("Size EU 42");
-//
-//        colorarr.add("Brown");
-//        colorarr.add("Yellow");
-//        colorarr.add("Green");
-//        colorarr.add("Blue");
-//        colorarr.add("Red");
-
-       // Oldprice.setPaintFlags(Oldprice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 
         pager.setAdapter(new MyAdapter1(getSupportFragmentManager(), 0, imagess));
         titleIndicator= (CirclePageIndicator)findViewById(R.id.titles);
@@ -197,24 +171,14 @@ public class InnerPrductActivity extends FragmentActivity {
                 finish();
             }
         });
-//        sizell.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                showdialog("Size", sizearr, sizetxt);
-//            }
-//        });
-//        colorll.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                showdialog("Color",colorarr,colortxt);
-//            }
-//        });
+
         selectimage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
               showcamerdialog();
             }
         });
+
         buynow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -222,12 +186,32 @@ public class InnerPrductActivity extends FragmentActivity {
                 startActivity(in);
             }
         });
+
         addtocart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String optionvaluesss = "";
                 for(int i=0;i<Option_id.size();i++){
-                    Log.e("optionvalues",""+Option_values.get(i)+" "+Option_id.get(i));
+                    if(Option_values.get(i).equals("null")){
+
+                    }
+                    else {
+                        if (Option_id.size() - 1 == i) {
+                            optionvaluesss = optionvaluesss.concat(Option_id.get(i) + "\":\"" + Option_values.get(i));
+
+                        } else {
+                            optionvaluesss = optionvaluesss.concat(Option_id.get(i) + "\":\"" + Option_values.get(i) + "\",\"");
+                        }
+                    }
+
+                    Log.e("optionvalues", "" + Option_id.get(i) + " " + Option_values.get(i));
+
                 }
+                if(optionvaluesss.endsWith("\",\"")) {
+
+                    optionvaluesss= optionvaluesss.substring(0, optionvaluesss.length() - 3);
+                }
+                dbm.addtocart(pro_id , resultquantity.getText().toString() , optionvaluesss);
                 finish();
                 Sub_categoryActivity.sdc.finish();
                 Product_list_Activity.pdc.finish();
@@ -273,8 +257,10 @@ public class InnerPrductActivity extends FragmentActivity {
                 for (int y = 0; y < pro_options.get(pos).options.size(); y++) {
                     pro_options_names.add(pro_options.get(pos).options.get(y).namess);
                     pro_options_id.add(pro_options.get(pos).options.get(y).product_option_value_id);
+                    Log.e("gfgf", pro_options_id.get(y));
+
                 }
-                showdialog("Select "+title, pro_options_names, tv,pos,pro_options_id);
+                showdialog("Select " + title, pro_options_names, tv, pos, pro_options_id);
             }
         });
 
@@ -285,10 +271,11 @@ public class InnerPrductActivity extends FragmentActivity {
         return addView;
     }
 
-        private void showdialog(final String title, ArrayList<String> itemss, TextView textView, final int pos, ArrayList<String> pro_options_id) {
+        private void showdialog(final String title, ArrayList<String> itemss, TextView textView, final int pos, final ArrayList<String> pro_options_id) {
 
             this.textView1 = textView;
 
+            this.pro_options_id2=pro_options_id;
 
             String[] myArray = itemss.toArray(new String[itemss.size()]);
 
@@ -303,12 +290,11 @@ public class InnerPrductActivity extends FragmentActivity {
                     public boolean onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
 
                         if (text != (null)) {
-                            Option_values.add(pos,"null");
+
+                            Option_values.set(pos, pro_options_id2.get(which));
                             textView1.setText("" + text);
                         } else {
-
-                            Option_values.add(pos,Option_id.get(which));
-
+                            Option_values.set(pos, "null");
                             textView1.setText(""+title);
                         }
                         // textsize.setText("" + text);
