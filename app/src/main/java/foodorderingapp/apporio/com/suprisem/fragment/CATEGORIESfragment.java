@@ -61,6 +61,7 @@ public class CATEGORIESfragment extends Fragment {
                 in.putStringArrayListExtra("sub_category_name", s_catname);
                 in.putStringArrayListExtra("sub_category_img", s_catimg);
                 in.putStringArrayListExtra("sub_category_status", s_catstatus);
+                in.putExtra("act","category");
                 startActivity(in);
 
             }

@@ -9,13 +9,10 @@ import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
-import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.google.gson.Gson;
@@ -23,8 +20,8 @@ import com.google.gson.GsonBuilder;
 
 import org.json.JSONObject;
 
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,17 +29,10 @@ import java.util.Map;
 import foodorderingapp.apporio.com.suprisem.Api_s.Apis_url;
 import foodorderingapp.apporio.com.suprisem.CartActivity;
 import foodorderingapp.apporio.com.suprisem.Setter_getter.Cart_Outter;
-import foodorderingapp.apporio.com.suprisem.Setter_getter.Inner_all_categories;
-import foodorderingapp.apporio.com.suprisem.Setter_getter.Inner_all_products;
+import foodorderingapp.apporio.com.suprisem.Setter_getter.Checksetter_getter;
 import foodorderingapp.apporio.com.suprisem.Setter_getter.Inner_all_products_cart;
-import foodorderingapp.apporio.com.suprisem.Setter_getter.Innermost_all_categories;
-import foodorderingapp.apporio.com.suprisem.Setter_getter.Innermost_all_pro_images;
-import foodorderingapp.apporio.com.suprisem.Setter_getter.Innermost_all_pro_options;
 import foodorderingapp.apporio.com.suprisem.Setter_getter.Innermost_pro_options_cart;
-import foodorderingapp.apporio.com.suprisem.Setter_getter.Outer_all_categories;
 import foodorderingapp.apporio.com.suprisem.adapter.Cartadapter;
-import foodorderingapp.apporio.com.suprisem.adapter.Categoriesadapter;
-import foodorderingapp.apporio.com.suprisem.fragment.CATEGORIESfragment;
 import foodorderingapp.apporio.com.suprisem.singleton.VolleySingleton;
 
 /**
@@ -61,7 +51,8 @@ public class parsingforCart {
     public static ArrayList<String> pro_quantity = new ArrayList<String>();
     public static ArrayList<String> pro_price = new ArrayList<String>();
     public static ArrayList<String> pro_status = new ArrayList<String>();
-
+    public static ArrayList<String> namessss = new ArrayList<>();
+    public static ArrayList<List<String> >namessss22= new ArrayList<>();
     public static ArrayList<ArrayList<Innermost_pro_options_cart>> pro_imagess = new ArrayList<>();
     public static ArrayList<ArrayList<Innermost_pro_options_cart>> pro_options = new ArrayList<>();
 
@@ -72,6 +63,7 @@ public class parsingforCart {
 //        pd.setCancelable(false);
         prefs2 = PreferenceManager.getDefaultSharedPreferences(c);
         queue = VolleySingleton.getInstance(c).getRequestQueue();
+        Log.e("body", "" + body);
         //   Toast.makeText(getActivity(),"id"+CategoryId,Toast.LENGTH_SHORT).show();
         String urlforRest_food  = Apis_url.get_Cart;
         final String mRequestBody = body.toString();
@@ -96,31 +88,41 @@ public class parsingforCart {
                     pro_price.clear();
                     pro_options.clear();
 
-                    Cart_Outter received2 = new Cart_Outter();
-                    received2 = gson.fromJson(""+response, Cart_Outter.class);
+                    Checksetter_getter rcv = new Checksetter_getter();
+                    rcv = gson.fromJson(response+"",Checksetter_getter.class);
 
-                    if (received2.status.equals("success")) {
-                        product_names=received2.cart;
-                        CartActivity.totalprice.setText("Total : "+received2.total);
-                        for (int i = 0; i < product_names.size(); i++)
-                        {
-                            pro_id.add(product_names.get(i).product_id);
-                            pro_name.add(product_names.get(i).namess);
-                            pro_img.add(product_names.get(i).image);
-                            pro_quantity.add(product_names.get(i).quantity);
-                            pro_options.add(product_names.get(i).optionsss);
-                            pro_price.add(product_names.get(i).price);
-                          //  Toast.makeText(c, ""+pro_name+" "+pro_options.get(i).size(), Toast.LENGTH_SHORT).show();
+                    if(rcv.status.equals("success")) {
+
+                        Cart_Outter received2 = new Cart_Outter();
+                        received2 = gson.fromJson("" + response, Cart_Outter.class);
+
+                        if (received2.status.equals("success")) {
+                            product_names = received2.cart;
+                            CartActivity.totalprice.setText("Total : " + received2.total);
+                            for (int i = 0; i < product_names.size(); i++) {
+                                pro_id.add(product_names.get(i).product_id);
+                                pro_name.add(product_names.get(i).namess);
+                                pro_img.add(product_names.get(i).image);
+                                pro_quantity.add(product_names.get(i).quantity);
+                                pro_options.add(product_names.get(i).optionsss);
+                                pro_price.add(product_names.get(i).price);
+
+
+                            }
+
+                            CartActivity.lv.setAdapter(new Cartadapter(c, pro_id, pro_name, pro_img,
+                                    pro_quantity, pro_options, pro_price));
+
+                        } else {
+
+                            CartActivity.pb.setVisibility(View.GONE);
 
                         }
-
-                    CartActivity.lv.setAdapter(new Cartadapter(c,pro_id,pro_name,pro_img,
-                            pro_quantity,pro_options,pro_price));
-
-                    } else {
-
+                    }
+                    else {
                         CartActivity.pb.setVisibility(View.GONE);
-
+                        CartActivity.totalprice.setText("Total : $ 00.00");
+                        Toast.makeText(c, "Cart Is empty", Toast.LENGTH_SHORT).show();
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -132,12 +134,14 @@ public class parsingforCart {
 //                Menufragment.pb.setVisibility(View.GONE);
                 Log.e("Sucess", "" + error.toString());
                 if(error.toString().equals("com.android.volley.ServerError")){
+                    CartActivity.pb.setVisibility(View.GONE);
+                    CartActivity.totalprice.setText("Total : $ 00.00");
+                    CartActivity.totlitem.setText("0");
                     Toast.makeText(c, "Cart Is empty", Toast.LENGTH_SHORT).show();
                 }
                 CartActivity.lv.setVisibility(View.GONE);
                 CartActivity.pb.setVisibility(View.GONE);
                 // Toast.makeText(getActivity(), "Please enter the email and password", Toast.LENGTH_SHORT).show();
-
             }
 
         })

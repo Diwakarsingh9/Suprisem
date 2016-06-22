@@ -48,10 +48,15 @@ import com.etsy.android.grid.StaggeredGridView;
 import java.util.ArrayList;
 
 import foodorderingapp.apporio.com.suprisem.Database.DBManager;
+import foodorderingapp.apporio.com.suprisem.Parsing.parsingforMain_featuredlist;
+import foodorderingapp.apporio.com.suprisem.Parsing.parsingforcountry;
+import foodorderingapp.apporio.com.suprisem.Parsing.parsingforfiltering;
+import foodorderingapp.apporio.com.suprisem.Setter_getter.Innermost_all_pro_options;
 import foodorderingapp.apporio.com.suprisem.adapter.SampleAdapter;
 import foodorderingapp.apporio.com.suprisem.fragment.CATEGORIESfragment;
 import foodorderingapp.apporio.com.suprisem.fragment.Favfragment;
 import foodorderingapp.apporio.com.suprisem.fragment.Mainfragment;
+import views.ProgressWheel;
 
 public class MainActivity extends AppCompatActivity {
     private static final int TYPE_HEADER = 0;  // Declaring Variable to Understand which View is being worked on
@@ -61,7 +66,8 @@ public class MainActivity extends AppCompatActivity {
     private int mIcons[];
 
     String data[]={"Apple","Bingo","Charlie","Asus","Ample","Amplifier","Bag","Chain Lock"};
-
+    public static ProgressWheel pb2233;
+    public static ListView lv4;
     private String name;        //String Resource for header View Name
     private int profile ;        //int Resource for header view profile picture
     private String email;       //String Resource for header view email
@@ -76,8 +82,8 @@ public class MainActivity extends AppCompatActivity {
     public static String PROFILE = "";
     LinearLayout llfrhome, llforcategories, llforfav;
     ImageView homeic, catic, favic;
-
-    ArrayAdapter adp;
+        TextView totlitem;
+    public static ArrayAdapter adp;
     private android.support.v7.widget.Toolbar toolbar;                              // Declaring the Toolbar Object
     public static String TITLES[] = {"Home","Categories","Cart"
             ,"My Favourites","Share the App","FAQ","Rate the App",
@@ -95,6 +101,8 @@ public class MainActivity extends AppCompatActivity {
             R.drawable.contact,
             R.drawable.partner,
             R.drawable.logout};
+    public static ArrayList<String> prod_img = new ArrayList<String>();
+    public static ArrayList<Innermost_all_pro_options> pro_options = new ArrayList<>();
     ActionBarDrawerToggle mDrawerToggle;
     static DBManager dbm;
     public TextView head;
@@ -111,6 +119,7 @@ public class MainActivity extends AppCompatActivity {
         cartll = (FrameLayout) findViewById(R.id.cartll);
         head = (TextView) findViewById(R.id.header);
         search = (ImageView) findViewById(R.id.sear);
+        totlitem = (TextView) findViewById(R.id.total_item);
         homeic = (ImageView) findViewById(R.id.homeic);
         catic = (ImageView) findViewById(R.id.categoryic);
         favic = (ImageView) findViewById(R.id.favic);
@@ -120,6 +129,7 @@ public class MainActivity extends AppCompatActivity {
         dbm = new DBManager(MainActivity.this);
        // dbm.clearCartTable();
         toolbar.setTitle("");
+        totlitem.setText(""+dbm.getFullTable().size());
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.drawable.menu);
         mRecyclerView = (RecyclerView) findViewById(R.id.RecyclerView); // Assigning the RecyclerView Object to the xml View
@@ -152,6 +162,9 @@ public class MainActivity extends AppCompatActivity {
                 homeic.setImageResource(R.drawable.homegreen);
                 catic.setImageResource(R.drawable.category);
                 favic.setImageResource(R.drawable.fav);
+//                llfrhome.setBackgroundColor(Color.parseColor("#333333"));
+//                llforfav.setBackgroundColor(Color.parseColor("#ffffff"));
+//                llforcategories.setBackgroundColor(Color.parseColor("#ffffff"));
                 if (fragment != null) {
                     head.setText("SURPRISEM");
                     FragmentManager fragmentManager = getSupportFragmentManager();
@@ -169,6 +182,9 @@ public class MainActivity extends AppCompatActivity {
                 homeic.setImageResource(R.drawable.home);
                 catic.setImageResource(R.drawable.categorygreen);
                 favic.setImageResource(R.drawable.fav);
+//                llfrhome.setBackgroundColor(Color.parseColor("#ffffff"));
+//                llforfav.setBackgroundColor(Color.parseColor("#ffffff"));
+//                llforcategories.setBackgroundColor(Color.parseColor("#333333"));
                 if (fragment != null) {
                     head.setText("CATEGORIES");
                     FragmentManager fragmentManager = getSupportFragmentManager();
@@ -186,6 +202,9 @@ public class MainActivity extends AppCompatActivity {
                 homeic.setImageResource(R.drawable.home);
                 catic.setImageResource(R.drawable.category);
                 favic.setImageResource(R.drawable.favouritesgreen);
+//                llfrhome.setBackgroundColor(Color.parseColor("#ffffff"));
+//                llforfav.setBackgroundColor(Color.parseColor("#333333"));
+//                llforcategories.setBackgroundColor(Color.parseColor("#ffffff"));
                 if (fragment != null) {
                     head.setText("FAVOURITES");
                     FragmentManager fragmentManager = getSupportFragmentManager();
@@ -264,17 +283,17 @@ public class MainActivity extends AppCompatActivity {
         window.setGravity(Gravity.CENTER);
         window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.setContentView(R.layout.dialogforsearch);
-
-        dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
        ImageView close = (ImageView)dialog.findViewById(R.id.closed);
         final EditText  searchedt = (EditText)dialog. findViewById(R.id.searchedt);
-        final ListView lv4 = (ListView)dialog. findViewById(R.id.lvsearch);
+         lv4 = (ListView)dialog. findViewById(R.id.lvsearch);
+        pb2233 = (ProgressWheel)dialog.findViewById(R.id.pb2233);
         lv4.setTextFilterEnabled(true);
         lv4.setVisibility(View.GONE);
         try {
 
-          adp = new ArrayAdapter(MainActivity.this, R.layout.layoutforsearchfinder, R.id.textView10, data);
-            lv4.setAdapter(adp);
+//          adp = new ArrayAdapter(MainActivity.this, R.layout.layoutforsearchfinder, R.id.textView10, data);
+//            lv4.setAdapter(adp);
 
 
             searchedt.addTextChangedListener(new TextWatcher() {
@@ -291,7 +310,9 @@ public class MainActivity extends AppCompatActivity {
 
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    MainActivity.this.adp.getFilter().filter(s);
+//                    MainActivity.this.adp.getFilter().filter(s);
+
+                    parsingforfiltering.parsing(MainActivity.this,s+"");
                     if(searchedt.getText().toString().equals(""))
                     {
                         lv4.setVisibility(View.GONE);
@@ -321,7 +342,25 @@ public class MainActivity extends AppCompatActivity {
         lv4.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //MainActivity.uuuuuu=0;
+
+                prod_img.clear();
+                pro_options.clear();
+                StoreCommonValues.optionpro.clear();
+                for(int j=0;j< parsingforfiltering.pro_imagess.get(position).size();j++){
+                    prod_img.add(parsingforfiltering.pro_imagess.get(position).get(j).image);
+                }
+                for(int j=0;j< parsingforfiltering.pro_options.get(position).size();j++){
+                    pro_options.add(parsingforfiltering.pro_options.get(position).get(j));
+                }
+                Intent i = new Intent(MainActivity.this, InnerPrductActivity.class);
+                i.putExtra("act","search");
+                i.putExtra("product_id", parsingforfiltering.pro_id.get(position));
+                i.putExtra("product_price", parsingforfiltering.pro_price.get(position));
+                i.putExtra("product_descp", parsingforfiltering.pro_desc.get(position));
+                i.putExtra("product_name", parsingforfiltering.pro_name.get(position));
+                i.putStringArrayListExtra("pro_imagess", prod_img);
+                StoreCommonValues.optionpro = pro_options;
+                startActivity(i);
 
             }
         });
@@ -331,7 +370,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-
                 dialog.dismiss();
             }
         });
@@ -342,7 +380,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
+        totlitem.setText(""+dbm.getFullTable().size());
 
         mAdapter = new MyAdapter(MainActivity.this, TITLES, ICONS, NAME, EMAIL, PROFILE);       // Creating the Adapter of MyAdapter class(which we are going to see in a bit)
 
@@ -414,6 +452,30 @@ public class MainActivity extends AppCompatActivity {
 
                     if (mNavTitles[getPosition() - 1].equals("Home")) {
                         Drawer.closeDrawer(Gravity.LEFT);
+                        Handler handler = new Handler();
+
+                        handler.postDelayed(new Runnable() {
+
+                            @Override
+                            public void run()
+
+                            {
+                                fragment = new Mainfragment();
+                                homeic.setImageResource(R.drawable.homegreen);
+                                catic.setImageResource(R.drawable.category);
+                                favic.setImageResource(R.drawable.fav);
+                                if (fragment != null) {
+                                    head.setText("SURPRISEM");
+                                    FragmentManager fragmentManager = getSupportFragmentManager();
+                                    fragmentManager.beginTransaction().replace(R.id.container3, fragment).commit();
+
+                                } else {
+                                    Log.e("MainActivity", "Error in creating fragment");
+                                }
+                            }
+                            //startThread();
+                        }
+                                , 200);
 
                     }
                     else if (mNavTitles[getPosition() - 1].equals("Categories")) {

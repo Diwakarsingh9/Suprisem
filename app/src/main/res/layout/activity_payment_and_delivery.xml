@@ -22,13 +22,20 @@
 
             android:elevation="5dp">
 
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:id="@+id/imageView2"
-                android:layout_gravity="left|center"
-                android:layout_marginLeft="15dp"
-                android:src="@drawable/back" />
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:id="@+id/backll">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:id="@+id/imageView2"
+                    android:layout_gravity="left|center"
+                    android:layout_marginLeft="15dp"
+                    android:src="@drawable/back" />
+            </LinearLayout>
 
             <views.textview.TypefaceTextView
                 android:layout_width="wrap_content"
@@ -45,7 +52,7 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="7dp"
+            android:layout_height="3dp"
             android:background="@drawable/bgforheading"/>
 
         <FrameLayout
@@ -86,7 +93,8 @@
 
                         android:textColor="@color/browndark"
                         android:textSize="20dp"
-                        android:layout_weight="1" />
+                        android:layout_weight="1"
+                        android:textStyle="bold" />
 
                     <views.textview.TypefaceTextView
                         android:layout_width="wrap_content"
@@ -111,6 +119,14 @@
                     android:textSize="15dp"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp" />
+             <View
+                 android:layout_width="match_parent"
+                 android:layout_height="0.5dp"
+                 android:background="@color/lightblack"
+                 android:layout_marginLeft="5dp"
+                 android:layout_marginRight="5dp"
+                 android:layout_marginBottom="5dp"
+                 android:layout_marginTop="10dp" />
                 <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
@@ -138,7 +154,8 @@
                         android:textColor="@color/browndark"
                         android:textSize="20dp"
                         android:layout_weight="1"
-                        android:layout_marginLeft="5dp" />
+                        android:layout_marginLeft="5dp"
+                        android:textStyle="bold" />
 
 
                 </LinearLayout>
@@ -151,6 +168,65 @@
                     android:id="@+id/llforrb">
 
                 </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/lightblack"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="10dp" />
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="5dp"
+                    android:gravity="left|center">
+
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:id="@+id/shippng"
+                        android:layout_marginRight="5dp"
+                        android:src="@drawable/ship"
+                        android:layout_marginLeft="5dp" />
+
+
+                    <views.textview.TypefaceTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Select Shipping Method"
+                        android:id="@+id/shp"
+                        geekui:customTypeface="fonts/Ubuntu-R.ttf"
+
+                        android:textColor="@color/browndark"
+                        android:textSize="20dp"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="5dp"
+                        android:textStyle="bold" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:id="@+id/llforshp">
+
+                </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/lightblack"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="10dp" />
+
             </LinearLayout>
 </ScrollView>
             <views.ProgressWheel
@@ -175,7 +251,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:text="Total : INR 67777 /-   "
-                    android:id="@+id/textView7"
+                    android:id="@+id/total"
                     android:textColor="#ffffff"
                     android:textSize="20dp"
                     android:textStyle="bold"

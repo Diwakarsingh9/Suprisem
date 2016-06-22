@@ -58,7 +58,9 @@ public class InnerPrductActivity extends FragmentActivity {
 
     ViewPager pager;
     TextView textView1,buynow,selectimage,p_name, p_price,p_desc,resultquantity;
-    ImageView back,camera,addtocart;
+    LinearLayout back;
+    ImageView camera;
+    ImageView addtocart;
     private static int RESULT_LOAD_IMG = 1;
     public  static Bitmap bitmap1;
     private AlbumStorageDirFactory mAlbumStorageDirFactory = null;
@@ -69,7 +71,7 @@ public class InnerPrductActivity extends FragmentActivity {
     ArrayList<String> Option_id;
     ArrayList<String> Option_values;
     static DBManager dbm;
-
+    TextView totlitem;
     //    ArrayList<String> quantityarr = new ArrayList<>();
     LinearLayout sizell,colorll,quantityll;
     CirclePageIndicator titleIndicator;
@@ -88,7 +90,8 @@ public class InnerPrductActivity extends FragmentActivity {
         setContentView(R.layout.activity_inner_prduct);
         fragmentManager=getSupportFragmentManager();
         pager = (ViewPager) findViewById(R.id.pager);
-        back = (ImageView) findViewById(R.id.imageView2);
+        back = (LinearLayout) findViewById(R.id.llforback);
+        totlitem = (TextView) findViewById(R.id.total_item);
        // sizetxt = (TextView) findViewById(R.id.size);
         addtocart = (ImageView) findViewById(R.id.addtocart);
         buynow = (TextView) findViewById(R.id.buynow);
@@ -112,13 +115,13 @@ public class InnerPrductActivity extends FragmentActivity {
         Option_id = new ArrayList<>();
         Option_values = new ArrayList<>();
         //colorll = (LinearLayout) findViewById(R.id.colorll);
-        String intentword = getIntent().getStringExtra("act");
+        final String intentword = getIntent().getStringExtra("act");
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.FROYO) {
             mAlbumStorageDirFactory = new FroyoAlbumDirFactory();
         } else {
             mAlbumStorageDirFactory = new BaseAlbumDirFactory();
         }
-       // if(intentword.equals("product")){
+//        if(intentword.equals("product")){
             llforcust.setVisibility(View.GONE);
         pro_id = getIntent().getStringExtra("product_id");
         pro_desc = getIntent().getStringExtra("product_descp");
@@ -213,8 +216,10 @@ public class InnerPrductActivity extends FragmentActivity {
                 }
                 dbm.addtocart(pro_id , resultquantity.getText().toString() , optionvaluesss);
                 finish();
-                Sub_categoryActivity.sdc.finish();
-                Product_list_Activity.pdc.finish();
+                if(intentword.equals("category")) {
+                    Sub_categoryActivity.sdc.finish();
+                    Product_list_Activity.pdc.finish();
+                }
                 Toast.makeText(InnerPrductActivity.this, "Added to Cart", Toast.LENGTH_SHORT).show();
             }
         });
@@ -237,6 +242,11 @@ public class InnerPrductActivity extends FragmentActivity {
             }
         });
 
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        totlitem.setText("" + dbm.getFullTable().size());
     }
     private View optionsadd(int layout_name, final String title, List<Innermost2_pro_options> options, final int i) {
 

@@ -1,6 +1,7 @@
 package foodorderingapp.apporio.com.suprisem.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -17,9 +18,13 @@ import com.etsy.android.grid.StaggeredGridView;
 
 import java.util.ArrayList;
 
+import foodorderingapp.apporio.com.suprisem.InnerPrductActivity;
 import foodorderingapp.apporio.com.suprisem.Parsing.parsingforMain_featuredlist;
+import foodorderingapp.apporio.com.suprisem.Parsing.parsingforproductlist;
 import foodorderingapp.apporio.com.suprisem.R;
 import foodorderingapp.apporio.com.suprisem.SampleData;
+import foodorderingapp.apporio.com.suprisem.Setter_getter.Innermost_all_pro_options;
+import foodorderingapp.apporio.com.suprisem.StoreCommonValues;
 import foodorderingapp.apporio.com.suprisem.adapter.SampleAdapter;
 import views.ProgressWheel;
 
@@ -32,6 +37,8 @@ public class Mainfragment extends Fragment implements
     public static SampleAdapter mAdapter;
     public static ProgressWheel pb;
     public static ArrayList<String> mData;
+    public static ArrayList<String> prod_img = new ArrayList<String>();
+    public static ArrayList<Innermost_all_pro_options> pro_options = new ArrayList<>();
 
     @Override
     public void onCreate(final Bundle savedInstanceState) {
@@ -103,6 +110,25 @@ public class Mainfragment extends Fragment implements
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-        Toast.makeText(getActivity(), "Item Clicked: " + position, Toast.LENGTH_SHORT).show();
+
+        prod_img.clear();
+        pro_options.clear();
+        StoreCommonValues.optionpro.clear();
+        for(int j=0;j< parsingforMain_featuredlist.pro_imagess.get(position).size();j++){
+            prod_img.add(parsingforMain_featuredlist.pro_imagess.get(position).get(j).image);
+        }
+        for(int j=0;j< parsingforMain_featuredlist.pro_options.get(position).size();j++){
+            pro_options.add(parsingforMain_featuredlist.pro_options.get(position).get(j));
+        }
+        Intent i = new Intent(getActivity(), InnerPrductActivity.class);
+        i.putExtra("act","main");
+        i.putExtra("product_id", parsingforMain_featuredlist.pro_id.get(position));
+        i.putExtra("product_price", parsingforMain_featuredlist.pro_price.get(position));
+        i.putExtra("product_descp", parsingforMain_featuredlist.pro_desc.get(position));
+        i.putExtra("product_name", parsingforMain_featuredlist.pro_name.get(position));
+        i.putStringArrayListExtra("pro_imagess", prod_img);
+        StoreCommonValues.optionpro = pro_options;
+        startActivity(i);
+        //Toast.makeText(getActivity(), "Item Clicked: " + position, Toast.LENGTH_SHORT).show();
     }
 }

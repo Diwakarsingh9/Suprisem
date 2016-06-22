@@ -12,10 +12,12 @@ import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import foodorderingapp.apporio.com.suprisem.Database.DBManager;
 import foodorderingapp.apporio.com.suprisem.Parsing.parsingforcategories;
 import foodorderingapp.apporio.com.suprisem.Parsing.parsingforproductlist;
 import foodorderingapp.apporio.com.suprisem.Setter_getter.Innermost_all_pro_options;
@@ -27,6 +29,8 @@ public class Product_list_Activity extends Activity {
     public static ProgressWheel pb;
     Productlistadapter asp;
     ImageView back;
+    TextView totlitem;
+    static DBManager dbm;
     FrameLayout cartll;
     public static ArrayList<String> prod_img = new ArrayList<String>();
     public static ArrayList<Innermost_all_pro_options> pro_options = new ArrayList<>();
@@ -42,6 +46,8 @@ public class Product_list_Activity extends Activity {
         back= (ImageView)findViewById(R.id.imageView2);
         cartll = (FrameLayout) findViewById(R.id.cartll);
         pdc = Product_list_Activity.this;
+        dbm = new DBManager(Product_list_Activity.this);
+        totlitem = (TextView) findViewById(R.id.total_item);
         categoryid = ""+getIntent().getStringExtra("category_id");
         parsingforproductlist.parsing(Product_list_Activity.this,categoryid);
         //asp = new Productlistadapter(Product_list_Activity.this);
@@ -85,7 +91,11 @@ public class Product_list_Activity extends Activity {
         });
 
     }
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        totlitem.setText("" + dbm.getFullTable().size());
+    }
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public void setStatusBarColor(){
 

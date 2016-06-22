@@ -13,5 +13,12 @@ public class Apis_url {
     public  static  String signup = "http://design.apporio.com/ecommerce/api/registration";
     public  static  String GetAddress = "http://design.apporio.com/ecommerce/api/get_customer_address?customer_id=";
     public  static  String ChangeAddress = "http://design.apporio.com/ecommerce/api/update_customer_address";
+    public  static  String paymentmethod = "http://design.apporio.com/ecommerce/api/getpayment_method";
+    public  static  String shipmentmethod = "http://design.apporio.com/ecommerce/api/getshipping_method";
+    public  static  String countryid = "http://design.apporio.com/ecommerce/api/country";
+    public  static  String ConfirmOrder = "http://design.apporio.com/ecommerce/api/confirmorder";
+    public  static  String placeorder = "http://design.apporio.com/ecommerce/api/place_order";
+    public  static  String filter = "http://design.apporio.com/ecommerce/api/getproducts?language_id="+language_id+"&filter_name=";
+
 
 }

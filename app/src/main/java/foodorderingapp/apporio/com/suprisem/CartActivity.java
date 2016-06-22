@@ -37,6 +37,7 @@ import java.util.List;
 import foodorderingapp.apporio.com.suprisem.Database.CartTable;
 import foodorderingapp.apporio.com.suprisem.Database.DBManager;
 import foodorderingapp.apporio.com.suprisem.Parsing.parsingforCart;
+import foodorderingapp.apporio.com.suprisem.Parsing.parsingforcountry;
 import foodorderingapp.apporio.com.suprisem.Parsing.parsingforlogin;
 import foodorderingapp.apporio.com.suprisem.Parsing.parsingforsignup;
 import foodorderingapp.apporio.com.suprisem.adapter.Cartadapter;
@@ -50,14 +51,23 @@ public class CartActivity extends Activity {
     public static CartActivity cartact;
     public static Spinner sp22;
     static DBManager dbm;
+
     public static List<CartTable> ct;
     boolean previouslyStarted;
+
     public static Dialog dialog,dialog2;
     public static ProgressWheel pb,pb22,pb23;
     public static RealmResults<CartTable> ct4;
-    public static ArrayList<String> productid = new ArrayList<String>();
-    public static ArrayList<String> quantitys = new ArrayList<String>();
-    public static ArrayList<String> options = new ArrayList<String>();
+    Spinner statesp;
+    static Spinner countrysp;
+    static String countryidstring = "";
+    static String stateidstring="";
+    public static  TextView totlitem;
+    public static ArrayList<String> stateid = new ArrayList<String>();
+    public static ArrayList<String> statenames = new ArrayList<String>();
+    public static ArrayList<String> countryid = new ArrayList<String>();
+    public static ArrayList<String> countryname = new ArrayList<String>();
+    public static ArrayList<JSONArray> statenamesarray = new ArrayList<>();
     private static final String[] m_Codes = { "91","376", "971",
             "93", "355", "374", "599", "244", "672", "54", "43", "61", "297",
             "994", "387", "880", "32", "226",
@@ -80,9 +90,11 @@ public class CartActivity extends Activity {
         totalprice= (TextView)findViewById(R.id.totalprice);
         pb= (ProgressWheel)findViewById(R.id.pb123);
         lv= (ListView)findViewById(R.id.listviewcart);
+        totlitem = (TextView) findViewById(R.id.total_item);
         dbm = new DBManager(CartActivity.this);
         Log.e("details",""+getCartdetails());
         parsingforCart.parsing(CartActivity.this, "" + getCartdetails());
+        totlitem.setText("" + dbm.getFullTable().size());
        // lv.setAdapter(new Cartadapter(CartActivity.this));
         cartact = CartActivity.this;
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
@@ -97,37 +109,57 @@ public class CartActivity extends Activity {
         checkout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!previouslyStarted) {
-                    showdialogforsignin();
+                if (dbm.getFullTable().size() == 0) {
+                    Toast.makeText(CartActivity.this, "Please add item in Cart !!!", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    if (!previouslyStarted) {
+                        showdialogforsignin();
 
-                } else {
-                    Intent in = new Intent(CartActivity.this,Payment_and_deliveryActivity.class);
-                   in.putExtra("Customer_id",""+prefs.getString("Customerid","null"));
-                    startActivity(in);
+                    } else {
+                        Intent in = new Intent(CartActivity.this, Payment_and_deliveryActivity.class);
+                        in.putExtra("Customer_id", "" + prefs.getString("Customerid", "null"));
+                        in.putExtra("Totalprice", "" + totalprice.getText().toString().trim());
+                        in.putExtra("Cart_details", "" + prefs.getString("" + getCartdetails(), "null"));
+                        startActivity(in);
+
+                    }
 
                 }
-
             }
         });
 
-
-
-
-
     }
 
+    public  static void countryidstateid(ArrayList<String> country_id, ArrayList<String> country_name, ArrayList<JSONArray> statenames){
+
+        countryid =country_id;
+        countryname = country_name;
+        statenamesarray = statenames;
+
+        try {
+            countryidstring = countryid.get(0);
+           stateidstring = statenamesarray.get(0).getJSONObject(0).getString("state_id");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        countrysp.setAdapter(new ArrayAdapter(cartact,R.layout.itemlayoutforspinner,
+                R.id.itemspinner,countryname));
+    }
     public static JSONObject getCartdetails() {
         JSONObject obj = new JSONObject();
         ct4 = dbm.getFullTable();
         JSONArray jsonArray2 = new JSONArray();
         try {
             obj.put("products",jsonArray2);
-            obj.put("language_id","1");
+            obj.put("language_id", "1");
 
 
 
             for (int i = 0; i < ct4.size(); i++) {
                 JSONObject jinnerobject2 = new JSONObject();
+                Log.e("optionsdatabase", ct4.size() + " " + ct4.get(i).getOption().toString() + "   " + ct4.get(i).getOption().toString());
+
                 jinnerobject2.put("product_id", ct4.get(i).getproductid());
                 jinnerobject2.put("quantity",ct4.get(i).getQuantity());
                 if(ct4.get(i).getOption().equals("")){
@@ -137,10 +169,12 @@ public class CartActivity extends Activity {
                 else {
                     jinnerobject2.put("option", new JSONObject("{\"" + (ct4.get(i).getOption()) + "\"}"));
                 }
+
                 jsonArray2.put(jinnerobject2);
+
             }
 
-            //     Log.e("JSON ", jinnerobject.toString());
+
             Log.e("JSONARRAYrest ", jsonArray2.toString());
 
 
@@ -149,13 +183,6 @@ public class CartActivity extends Activity {
             e.printStackTrace();
         }
         return obj;
-    }
-
-
-
-
-    public static void loadlistview() {
-
     }
 
     public  void showdialogforsignin() {
@@ -232,7 +259,9 @@ public class CartActivity extends Activity {
     }
 
     public  void showdialogforsignup() {
-
+        countryid.clear();
+        countryname.clear();
+        statenamesarray.clear();
       dialog2 = new Dialog(CartActivity.this,android.R.style.Theme_Translucent);
 
         //  dialog.getWindow().setStatusBarColor(Loginscreenactivity.this.getResources().getColor(R.color.example_color));
@@ -250,18 +279,57 @@ public class CartActivity extends Activity {
         final EditText firstname2 = (EditText)dialog2.findViewById(R.id.firstname22);
         final EditText lastname = (EditText)dialog2.findViewById(R.id.lastname);
         final EditText mobile = (EditText)dialog2.findViewById(R.id.mob);
-        final EditText passowrd = (EditText)dialog2.findViewById(R.id.password);
-        final EditText confirmpass = (EditText)dialog2.findViewById(R.id.confirmpassword);
+        final EditText passowrd = (EditText)dialog2.findViewById(R.id.password2);
+        final EditText confirmpass = (EditText)dialog2.findViewById(R.id.confirmpassword2);
         final EditText username = (EditText)dialog2.findViewById(R.id.email);
         final EditText address = (EditText)dialog2.findViewById(R.id.address);
         final EditText city = (EditText)dialog2.findViewById(R.id.city);
-        final EditText state = (EditText)dialog2.findViewById(R.id.state);
-        final EditText country = (EditText)dialog2.findViewById(R.id.country);
+         statesp = (Spinner)dialog2.findViewById(R.id.state);
+        countrysp = (Spinner)dialog2.findViewById(R.id.country);
         final EditText pincode = (EditText)dialog2.findViewById(R.id.pincode2);
         pb23= (ProgressWheel)dialog2.findViewById(R.id.pbd);
         TextView login = (TextView)dialog2.findViewById(R.id.login);
         TextView signup = (TextView)dialog2.findViewById(R.id.signup);
+        parsingforcountry.parsing(CartActivity.this,0);
 
+
+        countrysp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                statenames.get(0).getJSONObject(0).getString("name");
+                stateid.clear();
+                statenames.clear();
+                countryidstring = countryid.get(position);
+                for (int j = 0; j < statenamesarray.get(position).length(); j++) {
+                    try {
+                        stateid.add(statenamesarray.get(position).getJSONObject(j).getString("state_id"));
+                        statenames.add(statenamesarray.get(position).getJSONObject(j).getString("name"));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                statesp.setAdapter(new ArrayAdapter(cartact, R.layout.itemlayoutforspinner,
+                        R.id.itemspinner, statenames));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        statesp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                stateidstring = stateid.get(position);
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
         login.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -300,20 +368,21 @@ public class CartActivity extends Activity {
                         username.getText().toString().trim().equals("") ||
                         address.getText().toString().trim().equals("") ||
                         city.getText().toString().trim().equals("") ||
-                        state.getText().toString().trim().equals("") ||
-                        country.getText().toString().trim().equals("") ||
+                        statesp.getSelectedItem().toString().trim().equals("") ||
+                        countrysp.getSelectedItem().toString().trim().equals("") ||
                         pincode.getText().toString().trim().equals("")) {
                     Toast.makeText(CartActivity.this, "Required fields missing !!!", Toast.LENGTH_SHORT).show();
                 } else {
-                    if (passowrd.getText().toString().trim().equals(confirmpass.getText().toString().trim())) {
+                    if (!passowrd.getText().toString().trim().
+                            equals(confirmpass.getText().toString().trim())) {
                         Toast.makeText(CartActivity.this, "Passwords do not match.", Toast.LENGTH_SHORT).show();
                     } else {
-                        parsingforsignup.parsing(CartActivity.this,firstname2.getText().toString().trim(),
-                                lastname.getText().toString().trim(),spinnermob+mobile.getText().toString().trim(),
+                        parsingforsignup.parsing(CartActivity.this, firstname2.getText().toString().trim(),
+                                lastname.getText().toString().trim(), spinnermob + mobile.getText().toString().trim(),
                                 username.getText().toString().trim(), passowrd.getText().toString().trim(),
                                 confirmpass.getText().toString().trim(), address.getText().toString().trim(),
-                                city.getText().toString().trim(), state.getText().toString().trim(),
-                                country.getText().toString().trim(), pincode.getText().toString().trim());
+                                city.getText().toString().trim(), stateidstring,
+                                countryidstring, pincode.getText().toString().trim());
                     }
                 }
 
@@ -332,6 +401,13 @@ public class CartActivity extends Activity {
 
         dialog2.show();
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        totlitem.setText(""+dbm.getFullTable().size());
+    }
+
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public void setStatusBarColor(){
 

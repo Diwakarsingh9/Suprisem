@@ -30,6 +30,7 @@ import foodorderingapp.apporio.com.suprisem.Api_s.Apis_url;
 import foodorderingapp.apporio.com.suprisem.CartActivity;
 import foodorderingapp.apporio.com.suprisem.Payment_and_deliveryActivity;
 import foodorderingapp.apporio.com.suprisem.Setter_getter.Cart_Outter;
+import foodorderingapp.apporio.com.suprisem.Setter_getter.Checksetter_getter;
 import foodorderingapp.apporio.com.suprisem.Setter_getter.Inner_all_products_cart;
 import foodorderingapp.apporio.com.suprisem.Setter_getter.Inner_login;
 import foodorderingapp.apporio.com.suprisem.Setter_getter.Login_outter;
@@ -82,7 +83,9 @@ public class parsingforlogin {
                     GsonBuilder gsonBuilder = new GsonBuilder();
                     final Gson gson = gsonBuilder.create();
 
-
+                    Checksetter_getter rec = new Checksetter_getter();
+                    rec = gson.fromJson(""+response,Checksetter_getter.class);
+                    if(rec.status.equals("success")) {
 
                     Login_outter received2 = new Login_outter();
                     received2 = gson.fromJson(""+response, Login_outter.class);
@@ -105,6 +108,8 @@ public class parsingforlogin {
                         edit2.commit();
                         Intent in = new Intent(c,Payment_and_deliveryActivity.class);
                         in.putExtra("Customer_id",received2.customer.customer_id);
+                        in.putExtra("Cart_details",""+prefs.getString(""+CartActivity.getCartdetails(),"null"));
+
                         c.startActivity(in);
                         CartActivity.dialog.dismiss();
                     } else {
@@ -112,6 +117,11 @@ public class parsingforlogin {
                         CartActivity.pb22.setVisibility(View.GONE);
 
 
+                    }
+                    }
+                    else {
+                        CartActivity.pb23.setVisibility(View.GONE);
+                        Toast.makeText(c, ""+rec.message, Toast.LENGTH_SHORT).show();
                     }
                 } catch (Exception e) {
                     e.printStackTrace();

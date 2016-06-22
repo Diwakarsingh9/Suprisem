@@ -91,10 +91,11 @@ public class DBManager {
                         .equalTo("Option", optionsvalue)
                         .findFirst();
 
-
+        Log.e("change",""+productid+" "+quantity+" "+optionsvalue);
         myRealm.beginTransaction();
         tobechangedelement.setproductid(productid);
         tobechangedelement.setQuantity(quantity);
+        tobechangedelement.setOption(optionsvalue);
 
         myRealm.commitTransaction();
 //        updateTotalOnActionBar();
@@ -183,18 +184,19 @@ public class DBManager {
         boolean value  = false;
 
 
-        RealmResults<CartTable> results1 =
-                myRealm.where(CartTable.class)
-                        .equalTo("productid", ""+productId).equalTo("Quantity",quantity)
-                        .equalTo("Option",optionsValue)
-                        .findAll();
 
-        if(results1.size() >0){
-            value = true ;
-        }else {
+               if( myRealm.where(CartTable.class)
+                        .equalTo("productid", ""+productId)
+                        .equalTo("Option",optionsValue)
+                        .count()==0)
+     {
             value = false ;
+        }else {
+            value = true ;
         }
+        Log.e("valuesscheck",""+value);
         return  value ;
+
     }
 
 

@@ -1,4 +1,4 @@
-package foodorderingapp.apporio.com.suprisem.Parsing;
+package foodorderingapp.apporio.com.suprisem.Setter_getter;
 
 import com.google.gson.annotations.SerializedName;
 

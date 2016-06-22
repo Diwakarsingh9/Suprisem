@@ -22,15 +22,11 @@ import java.util.List;
 import java.util.Map;
 
 import foodorderingapp.apporio.com.suprisem.Api_s.Apis_url;
-import foodorderingapp.apporio.com.suprisem.CartActivity;
 import foodorderingapp.apporio.com.suprisem.Payment_and_deliveryActivity;
-import foodorderingapp.apporio.com.suprisem.Product_list_Activity;
 import foodorderingapp.apporio.com.suprisem.Setter_getter.Inner_all_address;
-import foodorderingapp.apporio.com.suprisem.Setter_getter.Inner_all_products;
 import foodorderingapp.apporio.com.suprisem.Setter_getter.Innermost_all_pro_images;
 import foodorderingapp.apporio.com.suprisem.Setter_getter.Innermost_all_pro_options;
-import foodorderingapp.apporio.com.suprisem.Setter_getter.Outer_all_products;
-import foodorderingapp.apporio.com.suprisem.adapter.Productlistadapter;
+import foodorderingapp.apporio.com.suprisem.Setter_getter.Outter_address;
 import foodorderingapp.apporio.com.suprisem.singleton.VolleySingleton;
 
 /**
@@ -47,8 +43,12 @@ public class parsingfordeliveryaddress {
     public static ArrayList<String> city = new ArrayList<String>();
     public static ArrayList<String> postcode = new ArrayList<String>();
     public static ArrayList<String> address_id = new ArrayList<String>();
-    public static ArrayList<String> pro_price = new ArrayList<String>();
-    public static ArrayList<String> pro_status = new ArrayList<String>();
+    public static ArrayList<String> countrys = new ArrayList<String>();
+    public static ArrayList<String> country_id = new ArrayList<String>();
+    public static ArrayList<String> zone = new ArrayList<String>();
+    public static ArrayList<String> zone_id = new ArrayList<String>();
+    public static ArrayList<String> telephone = new ArrayList<String>();
+    public static ArrayList<String> states = new ArrayList<String>();
     public static ArrayList<ArrayList<Innermost_all_pro_images>> pro_imagess = new ArrayList<>();
     public static ArrayList<ArrayList<Innermost_all_pro_options>> pro_options = new ArrayList<>();
 
@@ -76,6 +76,10 @@ public class parsingfordeliveryaddress {
                     address.clear();
                     postcode.clear();
                     address_id.clear();
+                    country_id.clear();
+                    countrys.clear();
+                    zone.clear();
+                    zone_id.clear();
 
 
                     Outter_address received2 = new Outter_address();
@@ -90,13 +94,25 @@ public class parsingfordeliveryaddress {
                             city.add(address_names.get(i).city);
                             postcode.add(address_names.get(i).postcode);
                             address_id.add(address_names.get(i).address_id);
+                            country_id.add(address_names.get(i).country_id);
+                            countrys.add(address_names.get(i).country);
+                            zone_id.add(address_names.get(i).zone_id);
+                            zone.add(address_names.get(i).state);
 
                         }
                         if(address_names.size()>0){
                             Payment_and_deliveryActivity.addresssssss.setText(""+address.get(0)+" , "+""+
-                            city.get(0)+" , "+postcode.get(0)+" \nMobile No - " +
+                            city.get(0)+" , "+zone.get(0)+" , "+countrys.get(0)+" , "+postcode.get(0)+" \nMobile No - " +
                                     prefs2.getString("telephone","xxxxxxxxx"));
                             Payment_and_deliveryActivity.Address_id = address_id.get(0);
+                            Payment_and_deliveryActivity.showpaymentmethod(address_id.get(0),prefs2.getString("firstname", ""),
+                                    prefs2.getString("lastname", ""),"null",address.get(0),"",city.get(0),postcode.get(0),
+                                    countrys.get(0),country_id.get(0),zone.get(0),zone_id.get(0),prefs2.getString("telephone", ""),
+                                    prefs2.getString("email",""));
+                            Payment_and_deliveryActivity.showshippingmethod(address_id.get(0),prefs2.getString("firstname", ""),
+                                    prefs2.getString("lastname", ""),"null",address.get(0),"",city.get(0),postcode.get(0),
+                                    countrys.get(0),country_id.get(0),zone.get(0),zone_id.get(0),prefs2.getString("telephone", ""),
+                                    prefs2.getString("email",""));
                         }
 
                     } else {

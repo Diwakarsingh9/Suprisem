@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -26,6 +27,7 @@ import java.util.Map;
 import foodorderingapp.apporio.com.suprisem.Api_s.Apis_url;
 import foodorderingapp.apporio.com.suprisem.CartActivity;
 import foodorderingapp.apporio.com.suprisem.Payment_and_deliveryActivity;
+import foodorderingapp.apporio.com.suprisem.Setter_getter.Checksetter_getter;
 import foodorderingapp.apporio.com.suprisem.Setter_getter.Login_outter;
 import foodorderingapp.apporio.com.suprisem.Setter_getter.Signup_outter;
 import foodorderingapp.apporio.com.suprisem.singleton.VolleySingleton;
@@ -74,37 +76,45 @@ public class parsingforsignup {
                     GsonBuilder gsonBuilder = new GsonBuilder();
                     final Gson gson = gsonBuilder.create();
 
+                    Checksetter_getter rec = new Checksetter_getter();
+                    rec = gson.fromJson(""+response,Checksetter_getter.class);
+                    if(rec.status.equals("success")) {
 
+                        Signup_outter received2 = new Signup_outter();
+                        received2 = gson.fromJson("" + response, Signup_outter.class);
 
-                    Signup_outter received2 = new Signup_outter();
-                    received2 = gson.fromJson(""+response, Signup_outter.class);
-
-                    if (received2.status.equals("success")) {
+                        if (received2.status.equals("success")) {
 //                        product_names=received2.customer;
-                        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(c);
-                        SharedPreferences.Editor edit2 = prefs.edit();
+                            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(c);
+                            SharedPreferences.Editor edit2 = prefs.edit();
 
-                        edit2.putBoolean("pref_previously_started", Boolean.TRUE);
-                        edit2.putString("Customerid", "" +received2.customer_id);
-                        edit2.putString("firstname", "" + firstname);
-                        edit2.putString("lastname", "" + lastname);
-                        edit2.putString("email", "" +username);
-                        edit2.putString("telephone", "" + mobile);
-                        edit2.putString("fax", "" + "null");
-                        edit2.putString("newsletter", "" + "null");
-                        edit2.putString("wishlist", "" + "null");
-                        edit2.putString("total", "" + "null");
-                        edit2.commit();
-                        Intent in = new Intent(c,Payment_and_deliveryActivity.class);
-                        in.putExtra("Customer_id",received2.customer_id);
-                        c.startActivity(in);
+                            edit2.putBoolean("pref_previously_started", Boolean.TRUE);
+                            edit2.putString("Customerid", "" + received2.customer_id);
+                            edit2.putString("firstname", "" + firstname);
+                            edit2.putString("lastname", "" + lastname);
+                            edit2.putString("email", "" + username);
+                            edit2.putString("telephone", "" + mobile);
+                            edit2.putString("fax", "" + "null");
+                            edit2.putString("newsletter", "" + "null");
+                            edit2.putString("wishlist", "" + "null");
+                            edit2.putString("total", "" + "null");
+                            edit2.commit();
+                            Intent in = new Intent(c, Payment_and_deliveryActivity.class);
+                            in.putExtra("Customer_id", received2.customer_id);
+                            in.putExtra("Cart_details", "" + prefs.getString("" + CartActivity.getCartdetails(), "null"));
+                            c.startActivity(in);
 
-                       CartActivity.dialog2.dismiss();
+                            CartActivity.dialog2.dismiss();
 
-                    } else {
+                        } else {
 
+                            CartActivity.pb23.setVisibility(View.GONE);
+
+                        }
+                    }
+                    else {
                         CartActivity.pb23.setVisibility(View.GONE);
-
+                        Toast.makeText(c, ""+rec.message, Toast.LENGTH_SHORT).show();
                     }
                 } catch (Exception e) {
                     e.printStackTrace();

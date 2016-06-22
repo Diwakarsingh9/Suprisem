@@ -29,7 +29,7 @@
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="40dp">
+                android:layout_marginBottom="2dp">
                 <FrameLayout
                     android:orientation="vertical"
                     android:layout_width="match_parent"
@@ -464,7 +464,7 @@
                     android:paddingLeft="2dp"
                     android:paddingRight="2dp"
 
-                    android:layout_marginBottom="10dp"
+                    android:layout_marginBottom="50dp"
                     android:paddingTop="2dp"
                     android:paddingBottom="2dp" />
 
@@ -539,7 +539,7 @@
                     android:layout_width="100dp"
                     android:layout_height="40dp"
                     android:gravity="left|center"
-                    android:layout_gravity="top|left"
+                    android:layout_gravity="left|center"
                     android:id="@+id/llforback">
 
                     <ImageView
@@ -561,10 +561,11 @@
 
                     <ImageView
                         android:layout_width="35dp"
-                        android:layout_height="30dp"
+                        android:layout_height="25dp"
                         android:id="@+id/cartimg"
                         android:layout_gravity="center"
-                        android:src="@drawable/cartwyt" />
+                        android:src="@drawable/cartwyt"
+                        android:scaleType="fitXY" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -572,7 +573,7 @@
                         android:layout_gravity="center|right"
                         android:id="@+id/total_item"
                         android:gravity="center"
-                        android:textColor="@color/white"
+                        android:textColor="@color/black"
                         android:background="@drawable/circleunit"
                         android:textSize="10dp"
                         android:layout_marginLeft="10dp"
@@ -586,7 +587,9 @@
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:layout_gravity="bottom|center">
+                android:layout_gravity="bottom|center"
+                android:background="@color/md_divider_white"
+                android:paddingBottom="0.1dp">
 
                 <views.textview.TypefaceTextView
                     geekui:customTypeface="fonts/Ubuntu-R.ttf"

@@ -12,7 +12,7 @@
         android:checked="false"
         android:layout_weight="1"
         android:textSize="18dp"
-        android:buttonTint="@color/black"
-        android:textColor="#000"
+        android:buttonTint="@color/lightblack"
+        android:textColor="@color/lightblack"
         android:layout_marginLeft="5dp" />
 </LinearLayout>

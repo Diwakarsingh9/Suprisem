@@ -58,11 +58,12 @@
                 android:layout_marginTop="2dp">
 
                 <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="35dp"
+                    android:layout_width="35dp"
+                    android:layout_height="25dp"
                     android:id="@+id/cartimg"
                     android:layout_gravity="center"
-                    android:src="@drawable/cart" />
+                    android:src="@drawable/cart"
+                    android:scaleType="fitXY" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -70,7 +71,7 @@
                     android:layout_gravity="center|right"
                     android:id="@+id/total_item"
                     android:gravity="center"
-                    android:textColor="@color/white"
+                    android:textColor="@color/black"
                     android:background="@drawable/circleunit"
                     android:textSize="10dp"
                     android:layout_marginLeft="10dp"
@@ -91,7 +92,7 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="7dp"
+            android:layout_height="3dp"
             android:background="@drawable/bgforheading"/>
         <FrameLayout
             android:layout_width="match_parent"
