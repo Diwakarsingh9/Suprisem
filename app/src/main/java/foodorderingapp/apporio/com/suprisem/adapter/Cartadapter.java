@@ -142,15 +142,19 @@ public class Cartadapter extends BaseAdapter {
         holder.resultquantity.setText("" + pro_quantity.get(position));
         holder.product_price.setText(""+pro_price.get(position));
         String ds="";
-        for(int i=0;i<pro_options.get(position).size();i++){
+        if(pro_options.get(position).size()==0){
+            holder.descp.setText("");
+        }
+        else {
+            for (int i = 0; i < pro_options.get(position).size(); i++) {
 
-            if(i==pro_options.get(position).size()-1){
-                ds = ds+pro_options.get(position).get(i).value;
+                if (i == pro_options.get(position).size() - 1) {
+                    ds = ds + pro_options.get(position).get(i).value;
+                } else {
+                    ds = ds + pro_options.get(position).get(i).value + ",";
+                }
+                holder.descp.setText("" + ds);
             }
-            else {
-                ds = ds+pro_options.get(position).get(i).value+",";
-            }
-            holder.descp.setText(""+ds);
         }
         holder.plus.setOnClickListener(new View.OnClickListener() {
             @Override

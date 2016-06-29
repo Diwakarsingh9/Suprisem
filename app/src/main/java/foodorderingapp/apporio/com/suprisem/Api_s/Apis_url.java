@@ -19,6 +19,7 @@ public class Apis_url {
     public  static  String ConfirmOrder = "http://design.apporio.com/ecommerce/api/confirmorder";
     public  static  String placeorder = "http://design.apporio.com/ecommerce/api/place_order";
     public  static  String filter = "http://design.apporio.com/ecommerce/api/getproducts?language_id="+language_id+"&filter_name=";
+    public  static  String imageupload = "http://design.apporio.com/ecommerce/api/uploadimage";
 
 
 }

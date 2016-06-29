@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -14,6 +15,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -28,6 +30,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -35,8 +38,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.viewpagerindicator.CirclePageIndicator;
 
+import org.json.JSONObject;
 import org.w3c.dom.Text;
 
 import java.io.File;
@@ -44,29 +58,40 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import foodorderingapp.apporio.com.suprisem.Api_s.Apis_url;
 import foodorderingapp.apporio.com.suprisem.Database.DBManager;
+import foodorderingapp.apporio.com.suprisem.Setter_getter.Checksetter_getter;
+import foodorderingapp.apporio.com.suprisem.Setter_getter.Imageupload;
 import foodorderingapp.apporio.com.suprisem.Setter_getter.Innermost2_pro_options;
 import foodorderingapp.apporio.com.suprisem.Setter_getter.Innermost_all_pro_options;
+import foodorderingapp.apporio.com.suprisem.Setter_getter.Login_outter;
 import foodorderingapp.apporio.com.suprisem.adapter.MyAdapter1;
 import foodorderingapp.apporio.com.suprisem.directory.AlbumStorageDirFactory;
 import foodorderingapp.apporio.com.suprisem.directory.BaseAlbumDirFactory;
 import foodorderingapp.apporio.com.suprisem.directory.FroyoAlbumDirFactory;
+import foodorderingapp.apporio.com.suprisem.singleton.VolleySingleton;
+import views.ProgressWheel;
 
 public class InnerPrductActivity extends FragmentActivity {
 
     ViewPager pager;
-    TextView textView1,buynow,selectimage,p_name, p_price,p_desc,resultquantity;
+    TextView textView1,buynow,p_name, p_price,p_desc,resultquantity,textcustom1,textcustomimg1;
     LinearLayout back;
-    ImageView camera;
+    public  static StringRequest sr;
+    public  static RequestQueue queue;
     ImageView addtocart;
+    Dialog dialog;
+    ProgressWheel pb22;
     private static int RESULT_LOAD_IMG = 1;
     public  static Bitmap bitmap1;
     private AlbumStorageDirFactory mAlbumStorageDirFactory = null;
     private static final String JPEG_FILE_PREFIX = "IMG_";
     private static final String JPEG_FILE_SUFFIX = ".jpg";
-    public static String imgDecodableString;
+    public static String imgDecodableString="";
 //    TextView Oldprice,sizetxt,colortxt,quantitytxt;
     ArrayList<String> Option_id;
     ArrayList<String> Option_values;
@@ -83,6 +108,7 @@ public class InnerPrductActivity extends FragmentActivity {
     String pro_id, pro_desc,pro_name,pro_price;
     ArrayList<String> imagess = new ArrayList<>();
     ArrayList<String> pro_options_id2 ;
+    ImageView camera;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setStatusBarColor();
@@ -97,17 +123,17 @@ public class InnerPrductActivity extends FragmentActivity {
         buynow = (TextView) findViewById(R.id.buynow);
         plus = (ImageView) findViewById(R.id.plus);
         minus = (ImageView) findViewById(R.id.minus);
-        selectimage= (TextView) findViewById(R.id.selectimggg);
+
         p_name = (TextView) findViewById(R.id.p_name);
         resultquantity = (TextView) findViewById(R.id.result);
         p_desc = (TextView) findViewById(R.id.p_desc);
         p_price= (TextView) findViewById(R.id.p_price);
 //        quantitytxt = (TextView) findViewById(R.id.quan);
 //        shipped2 = (TextView) findViewById(R.id.shipped);
-        llforcust = (LinearLayout) findViewById(R.id.llforcustom);
+       // llforcust = (LinearLayout) findViewById(R.id.llforcustom);
         llforoptions = (LinearLayout) findViewById(R.id.llforoptions);
         cartll = (FrameLayout) findViewById(R.id.cartll);
-        camera=(ImageView)findViewById(R.id.camera);
+
         //Oldprice = (TextView) findViewById(R.id.oldprice);
         sizell = (LinearLayout) findViewById(R.id.sizell);
         dbm = new DBManager(InnerPrductActivity.this);
@@ -122,7 +148,7 @@ public class InnerPrductActivity extends FragmentActivity {
             mAlbumStorageDirFactory = new BaseAlbumDirFactory();
         }
 //        if(intentword.equals("product")){
-            llforcust.setVisibility(View.GONE);
+//            llforcust.setVisibility(View.GONE);
         pro_id = getIntent().getStringExtra("product_id");
         pro_desc = getIntent().getStringExtra("product_descp");
         pro_name = getIntent().getStringExtra("product_name");
@@ -175,12 +201,7 @@ public class InnerPrductActivity extends FragmentActivity {
             }
         });
 
-        selectimage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-              showcamerdialog();
-            }
-        });
+
 
         buynow.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -270,7 +291,15 @@ public class InnerPrductActivity extends FragmentActivity {
                     Log.e("gfgf", pro_options_id.get(y));
 
                 }
-                showdialog("Select " + title, pro_options_names, tv, pos, pro_options_id);
+                if (title.equals("File")) {
+                    imgDecodableString = "";
+                    showoptioncameradialog(tv,pos);
+                } else if (title.equals("Text")) {
+                    showoptiontextdialog(tv,pos);
+                } else {
+                    showdialog("Select " + title, pro_options_names,
+                            tv, pos, pro_options_id);
+                }
             }
         });
 
@@ -353,6 +382,97 @@ public class InnerPrductActivity extends FragmentActivity {
 
             }
         });
+        cancel.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+    }
+
+    public  void showoptioncameradialog(TextView tv, final int pos) {
+        this.textcustomimg1 = tv;
+       dialog = new Dialog(InnerPrductActivity.this,android.R.style.Theme_Translucent_NoTitleBar);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        Window window=dialog.getWindow();
+        dialog.setCancelable(false);
+        window.setGravity(Gravity.CENTER);
+        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.setContentView(R.layout.dialogforphoto);
+        TextView cancel = (TextView) dialog.findViewById(R.id.cncl);
+        TextView ok = (TextView) dialog.findViewById(R.id.okkkkk);
+         camera = (ImageView) dialog.findViewById(R.id.camera);
+        pb22 = (ProgressWheel)dialog.findViewById(R.id.pbd);
+        TextView selctimg = (TextView)dialog.findViewById(R.id.selectimggg);
+
+
+        selctimg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showcamerdialog();
+            }
+        });
+        ok.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                if(!imgDecodableString.equals("")) {
+                    parsingforimageupload(InnerPrductActivity.this,imgDecodableString,
+                            textcustomimg1,pos);
+                }
+                else {
+                    Toast.makeText(InnerPrductActivity.this, "No image selected !!!", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                imgDecodableString="";
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+    }
+
+
+    public  void showoptiontextdialog(TextView tv, final int pos) {
+        this.textcustom1 = tv;
+        final Dialog dialog = new Dialog(InnerPrductActivity.this,android.R.style.Theme_Translucent_NoTitleBar);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        Window window=dialog.getWindow();
+        dialog.setCancelable(false);
+        window.setGravity(Gravity.CENTER);
+        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.setContentView(R.layout.dialogfortext);
+        TextView cancel = (TextView) dialog.findViewById(R.id.cncl);
+        TextView ok = (TextView) dialog.findViewById(R.id.okkkkk);
+        final EditText selctimg = (EditText)dialog.findViewById(R.id.textwewe);
+
+
+
+        ok.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                textcustom1.setText("Customised Text Done");
+                Option_values.set(pos, "" + selctimg.getText().toString().trim());
+                dialog.dismiss();
+            }
+        });
+
         cancel.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -556,4 +676,94 @@ public class InnerPrductActivity extends FragmentActivity {
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
     }
+
+
+    private void parsingforimageupload(final Context c, String imgDecodableString, final TextView textcustomimg1, final int pos) {
+        String body = "{\"image"+"\":\""+imgDecodableString+"\"}";
+        Log.e("bodydd", "" + body);
+
+        queue = VolleySingleton.getInstance(c).getRequestQueue();
+        //   Toast.makeText(getActivity(),"id"+CategoryId,Toast.LENGTH_SHORT).show();
+        String urlforRest_food  = Apis_url.imageupload;
+        final String mRequestBody = body.toString();
+        urlforRest_food= urlforRest_food.replace(" ","%20");
+        Log.e("bahjd", "" + urlforRest_food);
+        JsonObjectRequest sr = new JsonObjectRequest(Request.Method.POST, urlforRest_food,mRequestBody, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.e("Sucess", "" + response);
+                //  Toast.makeText(LoginCleanline.this , ""+response ,Toast.LENGTH_SHORT).show();
+                pb22.setVisibility(View.GONE);
+                try {
+                    GsonBuilder gsonBuilder = new GsonBuilder();
+                    final Gson gson = gsonBuilder.create();
+
+                    Checksetter_getter rec = new Checksetter_getter();
+                    rec = gson.fromJson(""+response,Checksetter_getter.class);
+                    if(rec.status.equals("success")) {
+
+                        Imageupload received2 = new Imageupload();
+                        received2 = gson.fromJson(""+response, Imageupload.class);
+
+                        if (received2.status.equals("success")) {
+//                        product_names=received2.customer;
+                            textcustomimg1.setText("Customised Image Successfully Done");
+                            Option_values.set(pos,""+received2.Code );
+                            dialog.dismiss();
+                        } else {
+
+                            pb22.setVisibility(View.GONE);
+
+
+                        }
+                    }
+                    else {
+                        pb22.setVisibility(View.GONE);
+                        Toast.makeText(c, ""+rec.message, Toast.LENGTH_SHORT).show();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                CartActivity.pb22.setVisibility(View.GONE);
+//                Menufragment.pb.setVisibility(View.GONE);
+                Log.e("Sucess", "" + error.toString());
+                // Toast.makeText(getActivity(), "Please enter the email and password", Toast.LENGTH_SHORT).show();
+
+            }
+
+        })
+
+
+        {
+
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+
+                return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Content-Type", "application/x-www-form-urlencoded");
+                return params;
+            }
+        };
+        sr.setRetryPolicy(new DefaultRetryPolicy(
+                30000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        queue.add(sr);
+        pb22.setVisibility(View.VISIBLE);
+    }
+
 }
+
