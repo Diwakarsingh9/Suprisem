@@ -26,6 +26,7 @@ import java.util.Map;
 
 import foodorderingapp.apporio.com.suprisem.Api_s.Apis_url;
 import foodorderingapp.apporio.com.suprisem.CartActivity;
+import foodorderingapp.apporio.com.suprisem.MainActivity;
 import foodorderingapp.apporio.com.suprisem.Payment_and_deliveryActivity;
 import foodorderingapp.apporio.com.suprisem.Setter_getter.Checksetter_getter;
 import foodorderingapp.apporio.com.suprisem.Setter_getter.Login_outter;
@@ -102,6 +103,8 @@ public class parsingforsignup {
                             Intent in = new Intent(c, Payment_and_deliveryActivity.class);
                             in.putExtra("Customer_id", received2.customer_id);
                             in.putExtra("Cart_details", "" + prefs.getString("" + CartActivity.getCartdetails(), "null"));
+                            in.putExtra("Totalprice", "" + CartActivity.totalprice.getText().toString().trim());
+
                             c.startActivity(in);
 
                             CartActivity.dialog2.dismiss();

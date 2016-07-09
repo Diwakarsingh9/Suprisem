@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -73,7 +74,7 @@ public class Sub_catlistadapter extends BaseAdapter {
 
     static class Holder {
         public LinearLayout size, toppings, sausage, sizeno, toppingsno, sausageno;
-        public NetworkImageView mNetworkImageView,plus,minus;
+        public ImageView mNetworkImageView,plus,minus;
         public TextView product_name, resultquantity, product_price, noofunit_product, cuisines;
         TextView tv1, tv2;
     }
@@ -96,12 +97,22 @@ public class Sub_catlistadapter extends BaseAdapter {
         holder.product_name = (TextView) convertView.findViewById(R.id.txt);
 
 
-        holder.mNetworkImageView = (NetworkImageView) convertView.findViewById(R.id.img);
+        holder.mNetworkImageView = (ImageView) convertView.findViewById(R.id.img);
 
-        mImageLoader.get(s_catimg.get(position).replace(" ", "%20"), ImageLoader.getImageListener(holder.mNetworkImageView,
-                R.drawable.stub, R.drawable
-                        .errorimg));
-        holder.mNetworkImageView.setImageUrl(s_catimg.get(position).replace(" ","%20"), mImageLoader);
+        String url = "";
+        if(s_catimg.get(position).replace(" ", "%20").equals("")){
+            url="abc";
+        }
+        else{
+            url = s_catimg.get(position).replace(" ", "%20");
+        }
+
+        Picasso.with(ctc)
+                .load(url)
+                .placeholder(R.drawable.stub) // optional
+                .error(R.drawable.errorimg)         // optional
+                .into(holder.mNetworkImageView);
+
 
         holder.product_name.setText(s_catname.get(position));
 

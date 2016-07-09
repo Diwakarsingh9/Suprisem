@@ -59,7 +59,7 @@ public class parsingfordeliveryaddress {
         prefs2 = PreferenceManager.getDefaultSharedPreferences(c);
         queue = VolleySingleton.getInstance(c).getRequestQueue();
         //   Toast.makeText(getActivity(),"id"+CategoryId,Toast.LENGTH_SHORT).show();
-        String urlforRest_food  = Apis_url.GetAddress+"&customer_id="+cust_id;
+        String urlforRest_food  = Apis_url.GetAddress+""+cust_id;
         urlforRest_food= urlforRest_food.replace(" ","%20");
         Log.e("bahjd", "" + urlforRest_food);
         sr = new StringRequest(Request.Method.GET, urlforRest_food, new Response.Listener<String>() {
@@ -101,6 +101,7 @@ public class parsingfordeliveryaddress {
 
                         }
                         if(address_names.size()>0){
+                            Log.e("address","adddrsesseses");
                             Payment_and_deliveryActivity.addresssssss.setText(""+address.get(0)+" , "+""+
                             city.get(0)+" , "+zone.get(0)+" , "+countrys.get(0)+" , "+postcode.get(0)+" \nMobile No - " +
                                     prefs2.getString("telephone","xxxxxxxxx"));
@@ -128,7 +129,8 @@ public class parsingfordeliveryaddress {
             @Override
             public void onErrorResponse(VolleyError error) {
 //                Menufragment.pb.setVisibility(View.GONE);
-                Log.e("Sucess", "" + error.toString());
+               // Log.e("Sucess", "" + error.toString());
+                Log.e("errr",""+error);
                 // Toast.makeText(getActivity(), "Please enter the email and password", Toast.LENGTH_SHORT).show();
 
             }

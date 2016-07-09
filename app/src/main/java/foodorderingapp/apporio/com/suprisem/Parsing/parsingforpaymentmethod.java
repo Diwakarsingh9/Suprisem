@@ -41,10 +41,10 @@ public class parsingforpaymentmethod {
     public static String Rest_id;
     public static SharedPreferences prefs2;
     public static List<Inner_all_payment_method> payment_method = new ArrayList<>();
-    public static ArrayList<String> code_name = new ArrayList<String>();
-    public static ArrayList<String> title_name = new ArrayList<String>();
-    public static ArrayList<String> sort_order = new ArrayList<String>();
-    public static ArrayList<String> terms = new ArrayList<String>();
+    public static ArrayList<String> code_name ;
+    public static ArrayList<String> title_name ;
+    public static ArrayList<String> sort_order ;
+    public static ArrayList<String> terms ;
 
 
 
@@ -70,10 +70,10 @@ public class parsingforpaymentmethod {
                     GsonBuilder gsonBuilder = new GsonBuilder();
                     final Gson gson = gsonBuilder.create();
 
-                    code_name.clear();
-                    title_name.clear();
-                    sort_order.clear();
-                    terms.clear();
+                    code_name =new ArrayList<>();
+                    title_name =new ArrayList<>();
+                    sort_order =new ArrayList<>();
+                    terms =new ArrayList<>();
 
 
 
@@ -91,6 +91,7 @@ public class parsingforpaymentmethod {
                             terms.add(payment_method.get(i).terms);
 
                         }
+                        Log.e("address","papapapa"+title_name);
                     Payment_and_deliveryActivity.makepaymentbox(code_name,title_name,sort_order,terms);
 
 
@@ -100,6 +101,7 @@ public class parsingforpaymentmethod {
 
                     }
                 } catch (Exception e) {
+                    Log.e("errr",""+e);
                     e.printStackTrace();
                 }
             }

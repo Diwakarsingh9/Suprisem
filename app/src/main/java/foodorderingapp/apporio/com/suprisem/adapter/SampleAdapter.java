@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 import com.etsy.android.grid.util.DynamicHeightTextView;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -29,10 +30,10 @@ import foodorderingapp.apporio.com.suprisem.singleton.VolleySingleton;
 public class SampleAdapter extends BaseAdapter {
 
     private static final String TAG = "SampleAdapter";
-
+    Context ctc;
     static class ViewHolder {
        TextView txtLineOne;
-        NetworkImageView img;
+        ImageView img;
 
     }
     private ImageLoader mImageLoader;
@@ -44,7 +45,7 @@ public class SampleAdapter extends BaseAdapter {
     private static final SparseArray<Double> sPositionHeightRatios = new SparseArray<Double>();
 
     public SampleAdapter(final Context context, ArrayList<String> pro_name, ArrayList<String> pro_img) {
-
+        this.ctc = context;
         mLayoutInflater = LayoutInflater.from(context);
 
 
@@ -78,7 +79,7 @@ public class SampleAdapter extends BaseAdapter {
             convertView = mLayoutInflater.inflate(R.layout.itemlayoutformainlist, parent, false);
             vh = new ViewHolder();
             vh.txtLineOne = (TextView) convertView.findViewById(R.id.textline_1);
-            vh.img = (NetworkImageView) convertView.findViewById(R.id.photoss);
+            vh.img = (ImageView) convertView.findViewById(R.id.photoss);
 
 
             convertView.setTag(vh);
@@ -86,13 +87,20 @@ public class SampleAdapter extends BaseAdapter {
         else {
             vh = (ViewHolder) convertView.getTag();
         }
+        String url = "";
+        if(mBackgroundColors.get(position).replace(" ", "%20").equals("")){
+            url="abc";
+        }
+        else{
+            url = mBackgroundColors.get(position).replace(" ", "%20");
+        }
 
+        Picasso.with(ctc)
+                .load(url)
+                .placeholder(R.drawable.stub) // optional
+                .error(R.drawable.errorimg)         // optional
+                .into(vh.img);
 
-
-        mImageLoader.get(mBackgroundColors.get(position).replace(" ", "%20"), ImageLoader.getImageListener(vh.img,
-                R.drawable.stub, R.drawable
-                        .errorimg));
-        vh.img.setImageUrl(mBackgroundColors.get(position).replace(" ","%20"), mImageLoader);
 
         vh.txtLineOne.setText(titlenames.get(position));
 

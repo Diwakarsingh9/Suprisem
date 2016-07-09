@@ -5,12 +5,14 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.opengl.Visibility;
 import android.os.Build;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.provider.Telephony;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -85,22 +87,10 @@ public class MainActivity extends AppCompatActivity {
         TextView totlitem;
     public static ArrayAdapter adp;
     private android.support.v7.widget.Toolbar toolbar;                              // Declaring the Toolbar Object
-    public static String TITLES[] = {"Home","Categories","Cart"
-            ,"My Favourites","Share the App","FAQ","Rate the App",
-            "About","Contact Us","Partner","Log Out"};
-    public static int ICONS[] = {
 
-            R.drawable.home,
-            R.drawable.category,
-            R.drawable.cartblck,
-            R.drawable.fav,
-            R.drawable.refer,
-            R.drawable.help,
-            R.drawable.rate,
-            R.drawable.about,
-            R.drawable.contact,
-            R.drawable.partner,
-            R.drawable.logout};
+    boolean previouslyStarted;
+    public static int ICONS[];
+    public static String TITLES[];
     public static ArrayList<String> prod_img = new ArrayList<String>();
     public static ArrayList<Innermost_all_pro_options> pro_options = new ArrayList<>();
     ActionBarDrawerToggle mDrawerToggle;
@@ -126,6 +116,46 @@ public class MainActivity extends AppCompatActivity {
         llfrhome = (LinearLayout) findViewById(R.id.homell);
         llforcategories = (LinearLayout) findViewById(R.id.categoryll);
         llforfav = (LinearLayout) findViewById(R.id.favll);
+
+            final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+            previouslyStarted = prefs.getBoolean("pref_previously_started", false);
+            if(previouslyStarted){
+             TITLES  = new String[]{"Home", "Categories", "Cart"
+                     , "My Favourites", "Share the App", "FAQ", "Rate the App",
+                     "About", "Contact Us", "Partner", "Log Out"};
+              ICONS  = new int[]{
+
+                      R.drawable.homegreen,
+                      R.drawable.categorygreen,
+                      R.drawable.cartblck,
+                      R.drawable.favouritesgreen,
+                      R.drawable.refer,
+                      R.drawable.help,
+                      R.drawable.rate,
+                      R.drawable.about,
+                      R.drawable.contact,
+                      R.drawable.partner,
+                      R.drawable.logout};
+            }
+            else {
+                TITLES  = new String[]{"Home", "Categories", "Cart"
+                        , "My Favourites", "Share the App", "FAQ", "Rate the App",
+                        "About", "Contact Us", "Partner"};
+                ICONS  = new int[]{
+
+                        R.drawable.homegreen,
+                        R.drawable.categorygreen,
+                        R.drawable.cartblck,
+                        R.drawable.favouritesgreen,
+                        R.drawable.refer,
+                        R.drawable.help,
+                        R.drawable.rate,
+                        R.drawable.about,
+                        R.drawable.contact,
+                        R.drawable.partner};
+
+            }
+
         dbm = new DBManager(MainActivity.this);
        // dbm.clearCartTable();
         toolbar.setTitle("");
@@ -380,6 +410,44 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        previouslyStarted = prefs.getBoolean("pref_previously_started", false);
+        if(previouslyStarted){
+            TITLES  = new String[]{"Home", "Categories", "Cart"
+                    , "My Favourites", "Share the App", "FAQ", "Rate the App",
+                    "About", "Contact Us", "Partner", "Log Out"};
+            ICONS  = new int[]{
+
+                    R.drawable.homegreen,
+                    R.drawable.categorygreen,
+                    R.drawable.cartblck,
+                    R.drawable.favouritesgreen,
+                    R.drawable.refer,
+                    R.drawable.help,
+                    R.drawable.rate,
+                    R.drawable.about,
+                    R.drawable.contact,
+                    R.drawable.partner,
+                    R.drawable.logout};
+        }
+        else {
+            TITLES  = new String[]{"Home", "Categories", "Cart"
+                    , "My Favourites", "Share the App", "FAQ", "Rate the App",
+                    "About", "Contact Us", "Partner"};
+            ICONS  = new int[]{
+
+                    R.drawable.homegreen,
+                    R.drawable.categorygreen,
+                    R.drawable.cartblck,
+                    R.drawable.favouritesgreen,
+                    R.drawable.refer,
+                    R.drawable.help,
+                    R.drawable.rate,
+                    R.drawable.about,
+                    R.drawable.contact,
+                    R.drawable.partner};
+
+        }
         totlitem.setText(""+dbm.getFullTable().size());
 
         mAdapter = new MyAdapter(MainActivity.this, TITLES, ICONS, NAME, EMAIL, PROFILE);       // Creating the Adapter of MyAdapter class(which we are going to see in a bit)
@@ -662,12 +730,67 @@ public class MainActivity extends AppCompatActivity {
 //                                            }
 //                                        });
                                 new AlertDialogWrapper.Builder(MainActivity.this)
-                                        .setTitle("EXIT")
-                                        .setMessage("Are you sure want to exit?")
+                                        .setTitle("Log Out")
+                                        .setMessage("Are you sure want to logout?")
                                         .setNegativeButton("OK", new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
-                                                finish();
+                                                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+                                                SharedPreferences.Editor edit2 = prefs.edit();
+
+                                                edit2.putBoolean("pref_previously_started", Boolean.FALSE);
+                                                edit2.putString("Customerid", "");
+                                                edit2.putString("firstname", "");
+                                                edit2.putString("lastname", "");
+                                                edit2.putString("email", "");
+                                                edit2.putString("telephone", "" );
+                                                edit2.putString("fax", "" );
+                                                edit2.putString("newsletter", "" );
+                                                edit2.putString("wishlist", "" );
+                                                edit2.putString("total", "");
+                                                edit2.commit();
+                                                previouslyStarted = prefs.getBoolean("pref_previously_started", false);
+                                                if(previouslyStarted){
+                                                    TITLES  = new String[]{"Home", "Categories", "Cart"
+                                                            , "My Favourites", "Share the App", "FAQ", "Rate the App",
+                                                            "About", "Contact Us", "Partner", "Log Out"};
+                                                    ICONS  = new int[]{
+
+                                                            R.drawable.homegreen,
+                                                            R.drawable.categorygreen,
+                                                            R.drawable.cartblck,
+                                                            R.drawable.favouritesgreen,
+                                                            R.drawable.refer,
+                                                            R.drawable.help,
+                                                            R.drawable.rate,
+                                                            R.drawable.about,
+                                                            R.drawable.contact,
+                                                            R.drawable.partner,
+                                                            R.drawable.logout};
+                                                }
+                                                else {
+                                                    TITLES  = new String[]{"Home", "Categories", "Cart"
+                                                            , "My Favourites", "Share the App", "FAQ", "Rate the App",
+                                                            "About", "Contact Us", "Partner"};
+                                                    ICONS  = new int[]{
+
+                                                            R.drawable.homegreen,
+                                                            R.drawable.categorygreen,
+                                                            R.drawable.cartblck,
+                                                            R.drawable.favouritesgreen,
+                                                            R.drawable.refer,
+                                                            R.drawable.help,
+                                                            R.drawable.rate,
+                                                            R.drawable.about,
+                                                            R.drawable.contact,
+                                                            R.drawable.partner};
+
+                                                }
+                                                totlitem.setText("" + dbm.getFullTable().size());
+
+                                                mAdapter = new MyAdapter(MainActivity.this, TITLES, ICONS, NAME, EMAIL, PROFILE);       // Creating the Adapter of MyAdapter class(which we are going to see in a bit)
+
+                                                mRecyclerView.setAdapter(mAdapter);
                                             }
                                         }).show();
 
@@ -778,9 +901,11 @@ public class MainActivity extends AppCompatActivity {
             if(holder.Holderid ==1) {                              // as the list view is going to be called after the header view so we decrement the
                 // position by 1 and pass it to the holder while setting the text and image
                 holder.textView.setText(mNavTitles[position - 1]); // Setting the Text with the array of our Titles
-                holder.imageView.setImageResource(mIcons[position -1]);// Settimg the image with array of our icons
+                holder.imageView.setImageResource(mIcons[position -1]);
+              // Settimg the image with array of our icons
             }
             else{
+
 //                Picasso.with(MainActivity.this)
 //                        .load("http://www.wscubetechapps.in/mobileteam/OneTapTakeway_app/" + profile)
 //                        .placeholder(R.drawable.download) // optional

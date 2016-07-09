@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -74,7 +75,7 @@ public class Favlistadapter extends BaseAdapter {
 
     static class Holder {
         public LinearLayout size, toppings, sausage, sizeno, toppingsno, sausageno;
-        public NetworkImageView mNetworkImageView,plus,minus;
+        public ImageView ImageView,plus,minus;
         public TextView product_name, resultquantity, product_price, noofunit_product, cuisines;
         TextView tv1, tv2;
     }
@@ -97,7 +98,7 @@ public class Favlistadapter extends BaseAdapter {
         holder.product_name = (TextView) convertView.findViewById(R.id.txt);
 
 
-        holder.mNetworkImageView = (NetworkImageView) convertView.findViewById(R.id.img);
+        holder.ImageView = (ImageView) convertView.findViewById(R.id.img);
 
 //        mImageLoader.get(pro_img.get(position), ImageLoader.getImageListener(holder.mNetworkImageView,
 //                R.drawable.stub, R.drawable

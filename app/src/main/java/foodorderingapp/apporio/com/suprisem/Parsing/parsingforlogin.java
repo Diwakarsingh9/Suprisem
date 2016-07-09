@@ -109,6 +109,7 @@ public class parsingforlogin {
                         Intent in = new Intent(c,Payment_and_deliveryActivity.class);
                         in.putExtra("Customer_id",received2.customer.customer_id);
                         in.putExtra("Cart_details",""+prefs.getString(""+CartActivity.getCartdetails(),"null"));
+                        in.putExtra("Totalprice", "" + CartActivity.totalprice.getText().toString().trim());
 
                         c.startActivity(in);
                         CartActivity.dialog.dismiss();

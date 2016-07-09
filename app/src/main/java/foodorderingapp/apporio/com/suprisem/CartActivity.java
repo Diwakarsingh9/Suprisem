@@ -50,7 +50,7 @@ public class CartActivity extends Activity {
     public static TextView checkout,totalprice;
     public static CartActivity cartact;
     public static Spinner sp22;
-    static DBManager dbm;
+   public static DBManager dbm;
 
     public static List<CartTable> ct;
     boolean previouslyStarted;
@@ -93,6 +93,7 @@ public class CartActivity extends Activity {
         totlitem = (TextView) findViewById(R.id.total_item);
         dbm = new DBManager(CartActivity.this);
         Log.e("details",""+getCartdetails());
+
         parsingforCart.parsing(CartActivity.this, "" + getCartdetails());
         totlitem.setText("" + dbm.getFullTable().size());
        // lv.setAdapter(new Cartadapter(CartActivity.this));

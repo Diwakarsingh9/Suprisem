@@ -163,7 +163,7 @@ public class InnerPrductActivity extends FragmentActivity {
             Option_values.add(y,"null");
         }
         for (int i=0;i<pro_options.size();i++){
-            llforoptions.addView(optionsadd(R.layout.itemlayoutforoptions,pro_options.get(i).name,pro_options.get(i).options,i));
+            llforoptions.addView(optionsadd(R.layout.itemlayoutforoptions,pro_options.get(i).name,pro_options.get(i).options,i,pro_options.get(i).type));
         }
         plus.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -269,7 +269,7 @@ public class InnerPrductActivity extends FragmentActivity {
         super.onResume();
         totlitem.setText("" + dbm.getFullTable().size());
     }
-    private View optionsadd(int layout_name, final String title, List<Innermost2_pro_options> options, final int i) {
+    private View optionsadd(int layout_name, final String title, List<Innermost2_pro_options> options, final int i, final String type) {
 
         LayoutInflater layoutInflater =
                 (LayoutInflater) InnerPrductActivity.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -291,10 +291,10 @@ public class InnerPrductActivity extends FragmentActivity {
                     Log.e("gfgf", pro_options_id.get(y));
 
                 }
-                if (title.equals("File")) {
+                if (type.equals("file")) {
                     imgDecodableString = "";
                     showoptioncameradialog(tv,pos);
-                } else if (title.equals("Text")) {
+                } else if (type.equals("text")||type.equals("textarea")) {
                     showoptiontextdialog(tv,pos);
                 } else {
                     showdialog("Select " + title, pro_options_names,

@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -112,7 +113,7 @@ public class Cartadapter extends BaseAdapter {
         public ImageView imgbg,plus,minus;
         public TextView product_name, resultquantity, product_price, descp, delete;
         TextView tv1, tv2;
-        public NetworkImageView mNetworkImageView;
+        public ImageView ImageView;
     }
 
     @Override
@@ -162,9 +163,9 @@ public class Cartadapter extends BaseAdapter {
                 int pos = (int) v.getTag();
                 int noofunits = (Integer.parseInt(holder.resultquantity.getText().toString()) + 1);
                 holder.resultquantity.setText("" + noofunits);
-                Log.e("addddd",""+optionvalue.get(pos));
+                Log.e("addddd", "" + optionvalue.get(pos));
                 dbm.addtocart(pro_id.get(pos), holder.resultquantity.getText().toString(), optionvalue.get(pos));
-                parsingforCart.parsing(ctc, CartActivity.getCartdetails()+"");
+                parsingforCart.parsing(ctc, CartActivity.getCartdetails() + "");
             }
         });
         holder.minus.setOnClickListener(new View.OnClickListener() {
@@ -186,16 +187,25 @@ public class Cartadapter extends BaseAdapter {
         holder.delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               int pos = (int) v.getTag();
-                dbm.removeItemfromDB(ctc,pro_id.get(pos),ct4.get(pos).getOption());
+                int pos = (int) v.getTag();
+                dbm.removeItemfromDB(ctc, pro_id.get(pos), ct4.get(pos).getOption());
             }
         });
-        holder.mNetworkImageView = (NetworkImageView) convertView.findViewById(R.id.img);
+        holder.ImageView = (ImageView) convertView.findViewById(R.id.img);
+        String url = "";
+        if(pro_img.get(position).replace(" ", "%20").equals("")){
+            url="abc";
+        }
+        else{
+            url = pro_img.get(position).replace(" ", "%20");
+        }
 
-        mImageLoader.get(pro_img.get(position).replace(" ", "%20"), ImageLoader.getImageListener(holder.mNetworkImageView,
-                R.drawable.stub, R.drawable
-                        .errorimg));
-        holder.mNetworkImageView.setImageUrl(pro_img.get(position).replace(" ", "%20"), mImageLoader);
+        Picasso.with(ctc)
+                .load(url)
+                .placeholder(R.drawable.stub) // optional
+                .error(R.drawable.errorimg)         // optional
+                .into(holder.ImageView);
+
 
 
         return convertView;

@@ -33,6 +33,7 @@ dependencies {
     compile 'com.daimajia.androidanimations:library:1.1.3@aar'
     compile project(':materialdialouge')
     compile project(':library')
+    compile 'com.squareup.picasso:picasso:2.4.0'
     compile files('libs/gson-2.2.4.jar')
     compile 'io.realm:realm-android:0.80.1'
 }

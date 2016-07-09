@@ -106,7 +106,7 @@
                 android:layout_marginRight="20dp"
                 android:gravity="left|center"
                 android:background="@null"
-
+                android:fontFamily=""
                 android:hint="Password"
                 android:textColor="#000"
                 android:textColorHint="#7a7979"

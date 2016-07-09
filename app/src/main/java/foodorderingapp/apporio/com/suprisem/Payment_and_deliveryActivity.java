@@ -472,6 +472,8 @@ public class Payment_and_deliveryActivity extends Activity {
     public static void makepaymentbox(ArrayList<String> code_name, ArrayList<String> title_name, ArrayList<String> sort_order, ArrayList<String> terms) {
         title_name2.clear();
         title_name2 = title_name;
+        Log.e("diwpay", "" + title_name+" "+title_name2);
+       // Toast.makeText(Payment_and_deliveryActivity.pdp, "payment", Toast.LENGTH_SHORT).show();
         checkedss=new Boolean[title_name2.size()];
         for(int i=0;i<title_name2.size();i++) {
 
@@ -482,9 +484,11 @@ public class Payment_and_deliveryActivity extends Activity {
     }
 
     public static void makeshipmentbox(ArrayList<String> code_name, ArrayList<String> title_name, ArrayList<String> sort_order, ArrayList<List<Innermost_quotes>> quote) {
+        //Toast.makeText(Payment_and_deliveryActivity.pdp, "ship", Toast.LENGTH_SHORT).show();
 
         title_name22.clear();
         title_name22 = title_name;
+        Log.e("diwship", "" + title_name+" "+title_name22);
         checkedss2=new Boolean[title_name22.size()];
         for(int i=0;i<title_name22.size();i++) {
 

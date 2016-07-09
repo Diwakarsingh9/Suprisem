@@ -42,10 +42,10 @@ public class parsingforshippingmethod {
     public static String Rest_id;
     public static SharedPreferences prefs2;
     public static List<Inner_all_shipping> shipping_method = new ArrayList<>();
-    public static ArrayList<String> code_name = new ArrayList<String>();
-    public static ArrayList<String> title_name = new ArrayList<String>();
-    public static ArrayList<String> sort_order = new ArrayList<String>();
-    public static ArrayList<List<Innermost_quotes>> quote = new ArrayList<>();
+    public static ArrayList<String> code_name ;
+    public static ArrayList<String> title_name ;
+    public static ArrayList<String> sort_order ;
+    public static ArrayList<List<Innermost_quotes>> quote ;
 
 
 
@@ -71,10 +71,10 @@ public class parsingforshippingmethod {
                     GsonBuilder gsonBuilder = new GsonBuilder();
                     final Gson gson = gsonBuilder.create();
 
-                    code_name.clear();
-                    title_name.clear();
-                    sort_order.clear();
-                    quote.clear();
+                    code_name =new ArrayList<>();
+                    title_name =new ArrayList<>();
+                    sort_order =new ArrayList<>();
+                    quote =new ArrayList<>();
 
 
 
